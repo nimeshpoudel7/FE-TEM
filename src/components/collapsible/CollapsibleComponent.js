@@ -7,7 +7,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-export const CollapsibleComponent = ({ items = [] }) => {
+export const CollapsibleComponent = ({
+  items = [],
+  showAccordionIcon = true,
+}) => {
   return (
     <Accordion>
       {items.map((eachItem, index) => (
@@ -17,7 +20,7 @@ export const CollapsibleComponent = ({ items = [] }) => {
               <Box as="span" flex="1" textAlign="left">
                 {eachItem.title ?? ""}
               </Box>
-              <AccordionIcon />
+              {showAccordionIcon ? <AccordionIcon /> : <></>}
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>{eachItem.body ?? ""}</AccordionPanel>
