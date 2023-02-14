@@ -22,12 +22,13 @@ import {
 import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 // Assets
-import illustration from "assets/img/auth/auth.png";
+import illustration from "assets/img/auth/lendenAuth.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
-function SignIn() {
+function LogIn() {
+  const [OTP, setOTP] = React.useState(false);
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -44,6 +45,11 @@ function SignIn() {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.200" }
   );
+const OTPClicked=()=>{
+    setOTP(!OTP)
+}
+
+  
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   return (
@@ -70,7 +76,8 @@ function SignIn() {
             color={textColorSecondary}
             fontWeight='400'
             fontSize='md'>
-            Enter your email and password to sign in!
+            {OTP?"Enter your Mobile Number and OTP to sign in!":" Enter your email and password to sign in!"}
+           
           </Text>
         </Box>
         <Flex
@@ -83,7 +90,7 @@ function SignIn() {
           mx={{ base: "auto", lg: "unset" }}
           me='auto'
           mb={{ base: "20px", md: "auto" }}>
-          <Button
+         {/* <Button
             fontSize='sm'
             me='0px'
             mb='26px'
@@ -106,6 +113,7 @@ function SignIn() {
             </Text>
             <HSeparator />
           </Flex>
+  */ }
           <FormControl>
             <FormLabel
               display='flex'
@@ -114,15 +122,15 @@ function SignIn() {
               fontWeight='500'
               color={textColor}
               mb='8px'>
-              Email<Text color={brandStars}>*</Text>
+             {OTP?"Mobile Number":"Email"} <Text color={brandStars}>*</Text>
             </FormLabel>
             <Input
               isRequired={true}
               variant='auth'
               fontSize='sm'
               ms={{ base: "0px", md: "0px" }}
-              type='email'
-              placeholder='mail@simmmple.com'
+              type= {OTP?"number":"email"} 
+              placeholder= {OTP?"98********":'mail@lendenclub.com'}
               mb='24px'
               fontWeight='500'
               size='lg'
@@ -133,13 +141,13 @@ function SignIn() {
               fontWeight='500'
               color={textColor}
               display='flex'>
-              Password<Text color={brandStars}>*</Text>
+              {OTP?"OTP":"Password"}<Text color={brandStars}>*</Text>
             </FormLabel>
             <InputGroup size='md'>
               <Input
                 isRequired={true}
                 fontSize='sm'
-                placeholder='Min. 8 characters'
+                placeholder={OTP?"OTP":"Password"}
                 mb='24px'
                 size='lg'
                 type={show ? "text" : "password"}
@@ -155,27 +163,20 @@ function SignIn() {
               </InputRightElement>
             </InputGroup>
             <Flex justifyContent='space-between' align='center' mb='24px'>
-              <FormControl display='flex' alignItems='center'>
-                <Checkbox
-                  id='remember-login'
-                  colorScheme='brandScheme'
-                  me='10px'
-                />
                 <FormLabel
-                  htmlFor='remember-login'
+                  onClick={OTPClicked}
                   mb='0'
                   fontWeight='normal'
-                  color={textColor}
+                  color={textColorBrand}
                   fontSize='sm'>
-                  Keep me logged in
+                  {OTP?"Login with password":"Login with OTP"}
                 </FormLabel>
-              </FormControl>
               <NavLink to='/auth/forgot-password'>
                 <Text
                   color={textColorBrand}
-                  fontSize='sm'
                   w='124px'
-                  fontWeight='500'>
+                  fontWeight='normal'
+                  fontSize='sm'>
                   Forgot password?
                 </Text>
               </NavLink>
@@ -215,4 +216,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default LogIn;

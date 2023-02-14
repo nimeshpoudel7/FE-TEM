@@ -90,6 +90,7 @@ export default function Dashboard(props) {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
+      console.log(routes)
       if (prop.layout === "/admin") {
         return (
           <Route
@@ -136,7 +137,7 @@ export default function Dashboard(props) {
             <Box>
               <Navbar
                 onOpen={onOpen}
-                logoText={"Horizon UI Dashboard PRO"}
+                logoText={"Lenden"}
                 brandText={getActiveRoute(routes)}
                 secondary={getActiveNavbar(routes)}
                 message={getActiveNavbarText(routes)}
