@@ -8,6 +8,7 @@ import {
   InputLeftElement,
   InputRightElement,
   Textarea,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { Controller } from "react-hook-form";
@@ -25,8 +26,12 @@ const TextInput = ({
   onIconClick,
   variant,
   noFloating,
+  background,
   ...extraProps
 }) => {
+  const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
+  const inputBg = useColorModeValue("secondaryGray.300", "navy.900");
+  const inputText = useColorModeValue("gray.700", "gray.100");
   return (
     <Controller
       control={control}
@@ -41,7 +46,14 @@ const TextInput = ({
               isInvalid={!!error}
               marginBottom={3}
             >
-              {!noFloating && <FormLabel>{label}</FormLabel>}
+              {!noFloating && <FormLabel
+                fontSize='sm'
+                ms='10px'
+                display='flex'
+                color={textColorPrimary}
+                fontWeight='bold'
+                _hover={{ cursor: "pointer" }}
+                >{label}</FormLabel>}
               
               <InputGroup height={type !== "textarea" ? "46px" : "auto"}>
                 {startIcon ? (
@@ -74,13 +86,17 @@ const TextInput = ({
                     paddingLeft={startIcon ? 9 : ""}
                     placeholder={noFloating ? label : " "}
                     type={type}
-                    height={"inherit"}
+                    h='44px'
+                    maxh='44px'                    _placeholder={{ fontWeight: "400", color: "secondaryGray.600" }}
                     onChange={onChange}
+                    bg={background ? background : inputBg}
                     value={value ?? ""}
                     isInvalid={!!error}
+                    fontWeight='500'
                     errorBorderColor={"red.500"}
                     disabled={disabled}
-                    variant={variant}
+                    color={inputText}
+                    variant={variant?variant:"main"}
                     {...extraProps}
                   />
                 )}

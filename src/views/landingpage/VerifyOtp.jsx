@@ -71,6 +71,7 @@ const VerifyOtp = ({handleSubmit,onSubmitHandler,control,setStep,isValid}) => {
             type="number"
             label="Mobile Number"
             endIcons="Send OTP"
+            placeholder="Enter Mobile Number"
             
           />
           <TextInput
