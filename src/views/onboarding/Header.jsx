@@ -6,7 +6,6 @@ const Header = () => {
   return (
     <Flex justify="space-between" align="center" mx={5} p={5}>
     <Image src={Logo} alt="lenden"/>
-    <Heading as="h3" color="blue.400" size='sm'>LOGOUT</Heading>
     </Flex>
   )
 }

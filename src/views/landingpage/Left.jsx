@@ -17,7 +17,10 @@ import {
   IoSearchSharp,
 } from 'react-icons/io5';
 import { ReactElement } from 'react';
+import Card from "components/card/Card";
 const Feature = ({ text, icon, iconBg }) => {
+  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
+
   return (
     <Stack direction={'row'} align={'center'}>
       <Flex
@@ -29,12 +32,15 @@ const Feature = ({ text, icon, iconBg }) => {
         bg={iconBg}>
         {icon}
       </Flex>
-      <Text fontWeight={600}>{text}</Text>
+      <Text color={textColorDetails} fontWeight={600}>{text}</Text>
     </Stack>
   );
 };
 
 const Left = () => {
+  const textColor = useColorModeValue("navy.700", "white");
+  const textColorSecondary = useColorModeValue("gray.400");
+  const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
   return (
     <VStack
       h="100vh"
@@ -42,10 +48,14 @@ const Left = () => {
       backgroundColor="#0E6CA8"
       align="start"
       color="#FFF"
+      mx={{base: "auto", lg: "0px"}}
+      me="7"
+      px={7}
     >
       <Box>
         <Image src={Logo} alt="lendenLogo"></Image>
       </Box>
+      <Card >
       <Container maxW={'5xl'} py={12}>
       <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
         <Stack spacing={4}>
@@ -60,7 +70,7 @@ const Left = () => {
             rounded={'md'}>
             Our Story
           </Text>
-          <Heading>A digital Product design agency</Heading>
+          <Heading  color={textColor} fontSize='36px' mb='10px'>A digital Product design agency</Heading>
           <Text color={'gray.500'} fontSize={'lg'}>
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
             nonumy eirmod tempor invidunt ut labore
@@ -105,6 +115,7 @@ const Left = () => {
         </Flex>
       </SimpleGrid>
     </Container>
+    </Card>
     </VStack>
   );
 };
