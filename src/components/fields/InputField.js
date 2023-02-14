@@ -10,10 +10,11 @@ import {
 import React from "react";
 
 export default function InputComponent(props) {
-  const { id, label, extra, placeholder, type, mb, ...rest } = props;
+  const { id, label,background, extra, placeholder, type, mb, ...rest } = props;
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
-
+  const inputBg = useColorModeValue("secondaryGray.300", "navy.900");
+  const inputText = useColorModeValue("gray.700", "gray.100");
   return (
     <Flex direction='column' mb={mb ? mb : "30px"}>
       <FormLabel
@@ -39,6 +40,8 @@ export default function InputComponent(props) {
         _placeholder={{ fontWeight: "400", color: "secondaryGray.600" }}
         h='44px'
         maxh='44px'
+        bg={background ? background : inputBg}
+        color={inputText}
       />
     </Flex>
   );

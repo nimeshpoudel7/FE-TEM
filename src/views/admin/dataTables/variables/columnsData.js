@@ -14,6 +14,7 @@ export const columnsDataDevelopment = [
   {
     Header: "PROGRESS",
     accessor: "progress",
+    show:true,
   },
 ];
 
@@ -33,6 +34,8 @@ export const columnsDataCheck = [
   {
     Header: "DATE",
     accessor: "date",
+    show:false,
+
   },
 ];
 
@@ -44,6 +47,8 @@ export const columnsDataColumns = [
   {
     Header: "PROGRESS",
     accessor: "progress",
+    show:false,
+
   },
   {
     Header: "QUANTITY",
@@ -52,6 +57,7 @@ export const columnsDataColumns = [
   {
     Header: "DATE",
     accessor: "date",
+    
   },
 ];
 
@@ -71,5 +77,7 @@ export const columnsDataComplex = [
   {
     Header: "PROGRESS",
     accessor: "progress",
+    show:false,
+
   },
 ];
