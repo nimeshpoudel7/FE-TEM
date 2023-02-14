@@ -5,6 +5,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
   SimpleGrid,
 } from "@chakra-ui/react";
 import TextInput from "components/forms/TextInput";
@@ -12,37 +13,31 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {useForm} from "react-hook-form";
 
-const verifySchema = Yup.object().shape({
-  mobile_number: Yup.string()
-    .nullable()
-    .typeError("That doesn't look like a phone number")
-    .min(10, "A phone number should be 10 digits")
-    .max(10, "A phone number should be 10 digits")
-    .required("A phone number is required")
-    .matches(/^\d{10}$/, "Enter a 10 digit valid phone number"),
-  otp: Yup.string()
-    .nullable()
-    .typeError("That doesn't look like an OTP")
-    .min(6, "OTP should be 6 digits")
-    .max(6, "OTP should be 6 digits")
-    .required("A phone number is required")
-    .matches(/^\d{6}$/, "Enter a 6 digit valid OTP"),
+const schema = Yup.object().shape({
+  name:Yup.string().required("Name is required"),
+  email:Yup.string().email().required("Email is required"),
+  pan:Yup.string().required("PAN is required"),
+  pincode:Yup.string().required("PIN Code is required"),
+  city:Yup.string().required("City is required")
 });
 
 const Personal = () => {
-  const verifyDefaultValues = {
-    mobile_number: "",
-    otp: "",
-  };
+ const defaultValues={
+  name:"",
+  email:"",
+  pan:"",
+  pincode:"",
+  city:""
+ }
   const {
     control,
     handleSubmit,
     formState: {isValid},
   } = useForm({
     defaultValues: {
-      ...verifyDefaultValues,
+      ...defaultValues,
     },
-    resolver: yupResolver(verifySchema),
+    resolver: yupResolver(schema),
   });
 
   const onSubmitHandler = () => {};
@@ -74,8 +69,20 @@ const Personal = () => {
               type="text"
               label="PIN Code"
             />
-            <TextInput name="City" control={control} type="text" label="City" />
+            <TextInput name="city" control={control} type="text" label="City" />
           </SimpleGrid>
+          <Button
+            fontSize="sm"
+            variant="brand"
+            fontWeight="500"
+            w={{sm:"100%", lg:"30%"}}
+            h="50"
+            mt="5px"
+            mb="24px"
+            type="submit"
+          >
+            Save and Continue
+          </Button>
         </form>
       </AccordionPanel>
     </AccordionItem>

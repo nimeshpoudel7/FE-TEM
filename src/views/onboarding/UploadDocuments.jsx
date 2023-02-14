@@ -5,12 +5,19 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  Button,
+  Flex,
+  Icon,
   SimpleGrid,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import TextInput from "components/forms/TextInput";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {useForm} from "react-hook-form";
+import { MdUpload } from "react-icons/md";
+import Dropzone from "views/admin/profile/components/Dropzone";
+import Card from "components/card/Card";
 
 const verifySchema = Yup.object().shape({
   mobile_number: Yup.string()
@@ -30,6 +37,7 @@ const verifySchema = Yup.object().shape({
 });
 
 const UploadDocument = () => {
+  const brandColor = useColorModeValue("brand.500", "white");
   const verifyDefaultValues = {
     mobile_number: "",
     otp: "",
@@ -48,6 +56,7 @@ const UploadDocument = () => {
   const onSubmitHandler = () => {};
 
   return (
+    
     <AccordionItem m={3}>
       <h2>
         <AccordionButton>
@@ -59,24 +68,42 @@ const UploadDocument = () => {
       </h2>
       <AccordionPanel pb={4}>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <SimpleGrid columns={{sm: "1", lg: "2"}} spacing={6} mt={4}>
-            <TextInput name="name" control={control} type="text" label="Name" />
-            <TextInput
-              name="email"
-              control={control}
-              type="text"
-              label="Email"
-            />
-            <TextInput name="pan" control={control} type="text" label="PAN" />
-            <TextInput
-              name="pincode"
-              control={control}
-              type="text"
-              label="PIN Code"
-            />
-            <TextInput name="City" control={control} type="text" label="City" />
-          </SimpleGrid>
+        <Card mb='20px' align='center' p='20px'>
+          <Dropzone
+          w={{ base: "100%", "2xl": "268px" }}
+          me='36px'
+          maxH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+          minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
+          content={
+            <Box>
+              <Icon as={MdUpload} w='80px' h='80px' color={brandColor} />
+              <Flex justify='center' mx='auto' mb='12px'>
+                <Text fontSize='xl' fontWeight='700' color={brandColor}>
+                  Upload Files
+                </Text>
+              </Flex>
+              <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
+                PNG, JPG and GIF files are allowed
+              </Text>
+            </Box>
+          }
+        />
+        </Card>
+{/*           
+          <Button
+            fontSize="sm"
+            variant="brand"
+            fontWeight="500"
+            w={{sm:"100%", lg:"30%"}}
+            h="50"
+            mt="5px"
+            mb="24px"
+            type="submit"
+          >
+            Save and Continue
+          </Button> */}
         </form>
+        
       </AccordionPanel>
     </AccordionItem>
   );
