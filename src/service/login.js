@@ -19,7 +19,6 @@ const useFetchClientUser = (clientId) => {
     [api.login, clientId],
     fetchClientUser(clientId),
     {
-      enabled: !!clientId,
       select: data => data?.data?.data,
     }
   );

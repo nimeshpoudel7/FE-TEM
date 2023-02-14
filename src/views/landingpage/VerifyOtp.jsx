@@ -3,7 +3,7 @@ import { Box, Button,  Flex, Heading, Icon, Text, useColorModeValue } from '@cha
 import TextInput from 'components/forms/TextInput';
 import {  FaChevronLeft } from 'react-icons/fa';
 
-const VerifyOtp = ({handleSubmit,onSubmitHandler,control,setStep,isValid}) => {
+const VerifyOtp = ({handleSubmit,onSubmitHandler,control,setStep,handleOtp}) => {
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   return (
@@ -72,6 +72,7 @@ const VerifyOtp = ({handleSubmit,onSubmitHandler,control,setStep,isValid}) => {
             label="Mobile Number"
             endIcons="Send OTP"
             placeholder="Enter Mobile Number"
+            onIconClick={handleOtp}
             
           />
           <TextInput
@@ -88,7 +89,6 @@ const VerifyOtp = ({handleSubmit,onSubmitHandler,control,setStep,isValid}) => {
             h="50"
             mb="24px"
             type="submit"
-            disabled={!isValid}
           >
             Create Account
           </Button>

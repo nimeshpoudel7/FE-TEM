@@ -18,7 +18,8 @@ const MCPHttpClient = axios.create({
  * Pass Integito API Key in Header
  */
 MCPHttpClient.interceptors.request.use(async config => {
-  const token = TokenService.getToken()?.access_token;
+  // const token = TokenService.getToken();
+  const token="cf74411241b1074f71930abe3a116a4c572e54e0"
 
   if (config && config.headers) {
     if (token) {

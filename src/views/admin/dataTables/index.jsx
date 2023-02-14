@@ -17,8 +17,11 @@ import tableDataDevelopment from "views/admin/dataTables/variables/tableDataDeve
 // import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
 // import tableDataComplex from "views/admin/dataTables/variables/tableDataComplex.json";
 import React from "react";
+import { useFetchInvestorList } from "service/investor-list";
 
 export default function Settings() {
+  const{data}=useFetchInvestorList()
+  console.log("data",data)
   // Chakra Color Mode
   let title="Master Channel Patner"
   return (

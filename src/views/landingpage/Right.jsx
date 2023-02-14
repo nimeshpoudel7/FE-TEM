@@ -4,6 +4,8 @@ import * as Yup from "yup";
 import {useForm} from "react-hook-form";
 import SignUp from "./SignUp";
 import VerifyOtp from "./VerifyOtp";
+import { useSignUpMCP } from "service/signup";
+import { useSendOTP } from "service/signup";
 
 
 const schema = Yup.object().shape({
@@ -37,6 +39,13 @@ const verifySchema=Yup.object().shape({
 
 function SignIn() {
  const[step,setStep]=useState(2)
+ const {
+  data,
+  mutateAsync: mutateSignUp,
+  isLoading,
+} = useSignUpMCP();
+
+const {mutateAsync:mutateSendOTP}=useSendOTP();
  
   const defaultValues = {
     email: "",
@@ -55,25 +64,51 @@ function SignIn() {
     },
     resolver: yupResolver(schema),
   });
-  const {control:verifyControl,handleSubmit:verifyHandleSubmit,formState: { isValid }} = useForm({
+  const {control:verifyControl,handleSubmit:verifyHandleSubmit,formState,getValues} = useForm({
     defaultValues: {
       ...verifyDefaultValues,
     },
     resolver: yupResolver(verifySchema),
   });
-  const onSubmitHandler = (data) => {
+  const onSubmitHandler = async(data) => {
     const values={...data,type:data.type.value,terms_agreed:true
   };
-  setStep(2)
-  }
-  const verifyOnSubmitHandler=(data)=>{
-    
+  
+  const response=await mutateSignUp(values)
+  if(response?.data?.code===1){
+    setStep(2)
   }
   
+  }
+  const verifyOnSubmitHandler=async(data)=>{
+    
+    const response= await mutateSendOTP({action:"verify_otp",mobile_number:data?.mobile_number,purpose:"sign_up",key:data?.otp})
+    if(response?.data?.code===1){
+      console.log("respo",response)
+      ///call checklist
+    }else{
+      
+    }
+  
+    //toast
+   }
+
+  
+  
+  const handleOtp=async()=>{
+   const values= getValues()
+   if(values?.mobile_number?.length===10){
+    //call api
+   const response= await mutateSendOTP({action:"send_otp",mobile_number:values?.mobile_number,purpose:"sign_up"})
+    
+   }else{
+    //toast
+   }
+  }
   return (
     step===1?
     <SignUp onSubmitHandler={onSubmitHandler} handleSubmit={handleSubmit} control={control} />
-    :<VerifyOtp onSubmitHandler={verifyOnSubmitHandler} handleSubmit={verifyHandleSubmit} control={verifyControl} setStep={setStep} isValid={isValid} />
+    :<VerifyOtp onSubmitHandler={verifyOnSubmitHandler} handleSubmit={verifyHandleSubmit} control={verifyControl} setStep={setStep} handleOtp={handleOtp}/>
   );
 
 }

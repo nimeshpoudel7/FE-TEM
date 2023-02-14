@@ -11,6 +11,8 @@ import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { toastFail } from "components/toast";
+import { Toaster } from "react-hot-toast";
+import TokenService from "service/service-token";
 
 
 const queryClient = new QueryClient({
@@ -27,9 +29,9 @@ const queryClient = new QueryClient({
       if (error.request?.status === 401) {
         // queryClient.setQueryData(authTokenKey, () => false);
         setTimeout(() => {
-          //clear token here
+          TokenService.clearToken();
           queryClient.clear();
-          toastFail("Session Expired! Please login again!");
+          toastFail("Token Expired! Please login again!");
         }, 500);
       }
     },
@@ -41,6 +43,7 @@ ReactDOM.render(
     <React.StrictMode>
       <ThemeEditorProvider>
       <QueryClientProvider client={queryClient}>
+      <Toaster position="top-right" />
       <ReactQueryDevtools initialIsOpen={false} />
         <HashRouter>
           <Switch>
