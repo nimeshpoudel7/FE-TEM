@@ -38,7 +38,7 @@ const verifySchema=Yup.object().shape({
 })
 
 function SignIn() {
- const[step,setStep]=useState(2)
+ const[step,setStep]=useState(1)
  const {
   data,
   mutateAsync: mutateSignUp,
@@ -75,7 +75,9 @@ const {mutateAsync:mutateSendOTP}=useSendOTP();
   };
   
   const response=await mutateSignUp(values)
+  console.log(response)
   if(response?.data?.code===1){
+    console.log("enter")
     setStep(2)
   }
   

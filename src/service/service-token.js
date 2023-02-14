@@ -5,10 +5,24 @@ function setToken(token) {
     console.error("Error storing token", e);
   }
 }
+function setUserDetails(data) {
+  try {
+    localStorage.setItem("user-data", JSON.stringify(data));
+  } catch (e) {
+    console.error("Error storing token", e);
+  }
+}
 
 function getToken() {
   try {
     return JSON.parse(localStorage.getItem("token") || "") ;
+  } catch (e) {
+    return null;
+  }
+}
+function getUser() {
+  try {
+    return JSON.parse(localStorage.getItem("user-data") || "") ;
   } catch (e) {
     return null;
   }
@@ -19,6 +33,16 @@ function getTokenDetails(){
     const token = getToken();
     return token
       ? token
+      : null;
+  } catch (e) {
+    return null;
+  }
+}
+function getUserDetails(){
+  try {
+    const details = getUser();
+    return details
+      ? details
       : null;
   } catch (e) {
     return null;
@@ -44,8 +68,11 @@ function clearToken() {
 const TokenService = {
   setToken,
   getToken,
+  getUserDetails,
+  getUser,
   getTokenDetails,
   isAuthenticated,
+  setUserDetails,
   clearToken,
 };
 

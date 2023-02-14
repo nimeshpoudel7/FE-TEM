@@ -1,7 +1,7 @@
 export const columnsDataDevelopment = [
   {
-    Header: "NAME",
-    accessor: "name",
+    Header: "investor_id",
+    accessor: "investor_id",
   },
   {
     Header: "TECH",

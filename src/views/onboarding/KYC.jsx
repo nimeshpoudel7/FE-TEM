@@ -18,9 +18,23 @@ import Card from "components/card/Card";
 import TableTopCreators from "views/admin/marketplace/components/TableTopCreators";
 import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
 import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
+import { useFetchUserDetails } from "service/kyc";
+import { useFetchPersonalDetails } from "service/kyc";
+import { useFetchBankDetails } from "service/kyc";
+import { useFetchDocumentDetails } from "service/kyc";
+import TokenService from "service/service-token";
 const KYC = () => {
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
+  const userDetails=TokenService.getUserDetails()
+  console.log(userDetails)
+  // if not redirect to login page
+  const {data:userData}=useFetchUserDetails()
+  const {data:personalData}=useFetchPersonalDetails(userDetails?.user_id)
+  const Bank=useFetchBankDetails(userDetails?.user_id)
+  const Document=useFetchDocumentDetails(userDetails?.user_id)
+
+  console.log(personalData)
   return (
    <Box>
       <Header />
@@ -36,7 +50,7 @@ const KYC = () => {
         </Flex>
         <Card>
           <Accordion allowToggle defaultIndex={[0]} >
-            <Personal />
+            <Personal personalData={personalData?personalData:""}/>
             <BankDetails />
             <UploadDocuments />
           </Accordion>

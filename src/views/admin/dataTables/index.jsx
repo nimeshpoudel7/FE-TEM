@@ -53,7 +53,7 @@ export default function Settings() {
       spacing={{ base: "20px", xl: "20px" }}>
       <DevelopmentTable
         columnsData={columnsDataDevelopment}
-        tableData={tableDataDevelopment}
+        tableData={data?.lender_list||[]}
         title={title}
       />
     </SimpleGrid>

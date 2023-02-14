@@ -24,9 +24,12 @@ const useSignUpMCP = () => {
     onSuccess: success => {
       if(success?.data?.code===1){
         TokenService.setToken(success?.data?.response?.token)
+        TokenService.setUserDetails(success?.data?.response)
+        console.log(success?.data)
       toastSuccess(success?.data?.message);
       queryClient.invalidateQueries(api.signup);
       }else{
+        console.log(success?.data)
         toastFail(success?.data?.message);
       }
       

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AccordionButton,
   AccordionIcon,
@@ -12,36 +12,60 @@ import TextInput from "components/forms/TextInput";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {useForm} from "react-hook-form";
+import { usePostPin } from "service/kyc";
 
 const schema = Yup.object().shape({
-  name:Yup.string().required("Name is required"),
+  first_name:Yup.string().required("Name is required"),
   email:Yup.string().email().required("Email is required"),
   pan:Yup.string().required("PAN is required"),
-  pincode:Yup.string().required("PIN Code is required"),
+  pin:Yup.string().required("PIN Code is required"),
   city:Yup.string().required("City is required")
 });
 
-const Personal = () => {
+const Personal = ({personalData}) => {
+  const {
+    data,
+    mutateAsync: mutatePin,
+    isLoading,
+  } = usePostPin();
  const defaultValues={
-  name:"",
-  email:"",
-  pan:"",
-  pincode:"",
-  city:""
+  first_name:personalData?.first_name??"",
+  email:personalData?.email??"",
+  pan:personalData?.pan??"",
+  pin:personalData?.pin??"",
+  city:personalData?.city??""
  }
+
   const {
     control,
+    reset,
     handleSubmit,
     formState: {isValid},
+    setValue,
   } = useForm({
     defaultValues: {
       ...defaultValues,
     },
+    personalData,
     resolver: yupResolver(schema),
   });
-
+  useEffect(() => {
+    reset(personalData)
+  }, [personalData])
   const onSubmitHandler = () => {};
+const handlePin=async(e)=>{
+  setValue("pin",e.target.value)
+  if(e.target.value.length==6){
+    const body={
+pin:e.target.value
+    }
+    const pinData=await mutatePin(body)
+    console.log(pinData?.data?.response?.PostOffice[0]?.District)
+    setValue("city",pinData?.data?.response?.PostOffice[0]?.District)
+  }
 
+  
+}
   return (
     <AccordionItem m={3}>
       <h2>
@@ -55,7 +79,7 @@ const Personal = () => {
       <AccordionPanel pb={4}>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <SimpleGrid columns={{sm: "1", lg: "2"}} spacing={6} mt={4}>
-            <TextInput name="name" control={control} type="text" label="Name" />
+            <TextInput name="first_name" control={control} type="text" label="Name" />
             <TextInput
               name="email"
               control={control}
@@ -64,12 +88,13 @@ const Personal = () => {
             />
             <TextInput name="pan" control={control} type="text" label="PAN" />
             <TextInput
-              name="pincode"
+              name="pin"
               control={control}
               type="text"
               label="PIN Code"
+              onChange={handlePin}
             />
-            <TextInput name="city" control={control} type="text" label="City" />
+            <TextInput name="city" control={control} type="text" label="City" disabled/>
           </SimpleGrid>
           <Button
             fontSize="sm"

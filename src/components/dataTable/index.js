@@ -86,7 +86,7 @@ export default function DataTables(props) {
   console.log(width,theme.breakpoints.md)
    if(width<parseFloat(theme.breakpoints.md)){
     console.log("heyyy")
-    initialState.hiddenColumns= "name,tech" 
+    // initialState.hiddenColumns= "name,tech" 
    }
    console.log(tableInstance)
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -157,9 +157,9 @@ export default function DataTables(props) {
       </Flex>
       <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         <Thead>
-          {headerGroups.map((headerGroup, index) => (
+          {headerGroups?.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
+              {headerGroup.headers?.map((column, index) => (
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   pe="10px"
@@ -180,22 +180,22 @@ export default function DataTables(props) {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {page?.map((row, index) => {
             prepareRow(row);
             return (
               <Tr {...row.getRowProps()} key={index}>
-                {row.cells.map((cell, index) => {
+                {row?.cells?.map((cell, index) => {
                   let data = "";
-                  if (cell.column.Header === "NAME") {
+                  if (cell.column.Header === "Name") {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
+                        {cell?.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "TECH") {
                     data = (
                       <Flex align="center">
-                        {cell.value.map((item, key) => {
+                        {cell?.value?.map((item, key) => {
                           if (item === "apple") {
                             return (
                               <AppleLogo
@@ -236,6 +236,26 @@ export default function DataTables(props) {
                       </Text>
                     );
                   } else if (cell.column.Header === "PROGRESS") {
+                    data = (
+                      <Flex align="center">
+                        <Text
+                          me="10px"
+                          color={textColor}
+                          fontSize="sm"
+                          fontWeight="700"
+                        >
+                          {cell.value}%
+                        </Text>
+                        <Progress
+                          variant="table"
+                          colorScheme="brandScheme"
+                          h="8px"
+                          w="63px"
+                          value={cell.value}
+                        />
+                      </Flex>
+                    );
+                  }else{
                     data = (
                       <Flex align="center">
                         <Text
