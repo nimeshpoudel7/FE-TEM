@@ -20,6 +20,7 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  Badge,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card";
@@ -255,7 +256,17 @@ export default function DataTables(props) {
                         />
                       </Flex>
                     );
-                  }else{
+                  }else if (cell.column.Header === "Action") {
+                    data = (
+                      <Flex align="center">
+                      <Badge ml="1" fontSize="0.8em" colorScheme="green">
+                      More
+                    </Badge>
+                      </Flex>
+                    );
+                  }
+                  
+                  else{
                     data = (
                       <Flex align="center">
                         <Text

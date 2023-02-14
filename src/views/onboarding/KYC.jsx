@@ -23,6 +23,7 @@ import { useFetchPersonalDetails } from "service/kyc";
 import { useFetchBankDetails } from "service/kyc";
 import { useFetchDocumentDetails } from "service/kyc";
 import TokenService from "service/service-token";
+import CompanyDetails from "./CompanyDetails";
 const KYC = () => {
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
@@ -44,7 +45,7 @@ const [stepper, setStepper] = useState([0])
       <Box mx={{sm:"5px",lg:"300px"}}>
         <Flex justify="center" align="center" direction="column">
           <Heading as="h2" size="md">
-            Welcome Mahesh Khatiwada
+            Welcome {userDetails?.first_name}
           </Heading>
           <Text size="sm">
             {" "}
@@ -52,10 +53,13 @@ const [stepper, setStepper] = useState([0])
           </Text>
         </Flex>
         <Card>
-          <Accordion allowToggle defaultIndex={stepper} index={stepper} >
+          <Accordion allowToggle defaultIndex={stepper}  >
             <Personal personalData={personalData?personalData:""} userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
+            {personalData?.user_type=="HUF"&&
+              <CompanyDetails  userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
+            }
             <BankDetails bankData={bankData?bankData:""} onSelectChange={handleSelectChange} userId={userDetails?.user_id} />
-            <UploadDocuments />
+            <UploadDocuments UserDetails={personalData?personalData:""} />
           </Accordion>
         </Card>
       </Box>

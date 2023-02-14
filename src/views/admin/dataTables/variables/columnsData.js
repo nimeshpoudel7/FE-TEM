@@ -16,6 +16,11 @@ export const columnsDataDevelopment = [
     accessor: "progress",
     show:true,
   },
+  {
+    Header: "Action",
+    accessor: "action",
+    show:true,
+  },
 ];
 
 export const columnsDataCheck = [

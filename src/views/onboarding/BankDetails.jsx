@@ -33,7 +33,7 @@ const schema = Yup.object().shape({
 
 const account_type = [
   {
-    value: "Savings",
+    value: "SAVINGS",
     label: "SAVINGS",
   },
   {
@@ -43,6 +43,7 @@ const account_type = [
 ];
 
 const BankDetails = ({bankData,onSelectChange,userId}) => {
+  console.log(bankData)
   const defaultValues = {
     account_number:bankData?.account_number??"",
     ifsc_code:bankData?.ifsc_code??"",

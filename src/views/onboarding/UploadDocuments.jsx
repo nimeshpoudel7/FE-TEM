@@ -69,26 +69,29 @@ const UploadDocument = () => {
       <AccordionPanel pb={4}>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
         <Card mb='20px' align='center' p='20px'>
+        <Flex h='100%' direction={{ base: "column", "2xl": "row" }}>
           <Dropzone
-          w={{ base: "100%", "2xl": "268px" }}
-          me='36px'
-          maxH={{ base: "60%", lg: "50%", "2xl": "100%" }}
-          minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
-          content={
-            <Box>
-              <Icon as={MdUpload} w='80px' h='80px' color={brandColor} />
-              <Flex justify='center' mx='auto' mb='12px'>
-                <Text fontSize='xl' fontWeight='700' color={brandColor}>
-                  Upload Files
+            w={{ base: "100%", "2xl": "268px" }}
+            me='36px'
+            maxH={{ base: "100%", lg: "100%", "2xl": "100%" }}
+            minH={{ base: "100%", lg: "100%", "2xl": "100%" }}
+            content={
+              <Box>
+                <Icon as={MdUpload} w='8px' h='8px' color={brandColor} />
+                <Flex justify='center' mx='auto' mb='12px'>
+                  <Text fontSize='xl' fontWeight='700' color={brandColor}>
+                    Upload Files
+                  </Text>
+                </Flex>
+                <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
+                  PNG, JPG and GIF files are allowed
                 </Text>
-              </Flex>
-              <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
-                PNG, JPG and GIF files are allowed
-              </Text>
-            </Box>
-          }
-        />
-        </Card>
+              </Box>
+            }
+          />
+
+        </Flex>
+      </Card>
 {/*           
           <Button
             fontSize="sm"

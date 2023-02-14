@@ -118,6 +118,35 @@ const postPersonalDetails = (requestData) => {
       },
     });
   };
+
+
+  const postCompanyDetails = (requestData) => {
+    return MCPHttpClient.post(
+      api.comapanyDetails,
+      requestData
+    );
+  };
+  
+  const usePostCompanyDetails = () => {
+    const queryClient = useQueryClient();
+    return useMutation(postCompanyDetails, {
+      onError: (error) => {
+        toastFail("Something went wrong.Please try again later");
+      },
+      onSuccess: success => {
+        if(success?.data?.code===1){
+          toastSuccess(success?.data?.message);
+          queryClient.invalidateQueries(api.comapanyDetails);
+          }else{
+            toastFail(success?.data?.message);
+          }
+    
+      },
+    });
+  };
+
+
+  
   // bank
 
   
@@ -170,6 +199,8 @@ export {
   usePostPin,
   useFetchDocumentDetails,
   usePostPersonalDetails,
-  usePostBankDetails
+  usePostBankDetails,
+  usePostCompanyDetails
+
 
 };
