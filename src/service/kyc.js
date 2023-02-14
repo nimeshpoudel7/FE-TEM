@@ -67,6 +67,32 @@ const fetchPersonalDetails = (userId) => () => {
     );
   };
 
+
+  
+const postPersonalDetails = (requestData) => {
+    return MCPHttpClient.post(
+      api.personalDetails,
+      requestData
+    );
+  };
+  
+  const usePostPersonalDetails = () => {
+    const queryClient = useQueryClient();
+    return useMutation(postPersonalDetails, {
+      onError: (error) => {
+        toastFail("Please enter a valid pin code");
+      },
+      onSuccess: success => {
+        if(success?.data?.code===1){
+          toastSuccess(success?.data?.message);
+          queryClient.invalidateQueries(api.personalDetails);
+          }else{
+            toastFail(success?.data?.message);
+          }
+    
+      },
+    });
+  };
   // bank
 
   
@@ -118,5 +144,6 @@ export {
   useFetchBankDetails,
   usePostPin,
   useFetchDocumentDetails,
+  usePostPersonalDetails
 
 };

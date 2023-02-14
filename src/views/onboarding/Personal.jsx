@@ -9,38 +9,44 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import TextInput from "components/forms/TextInput";
-import {yupResolver} from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { usePostPin } from "service/kyc";
+import { usePostPersonalDetails } from "service/kyc";
 
 const schema = Yup.object().shape({
-  first_name:Yup.string().required("Name is required"),
-  email:Yup.string().email().required("Email is required"),
-  pan:Yup.string().required("PAN is required"),
-  pin:Yup.string().required("PIN Code is required"),
-  city:Yup.string().required("City is required")
+  first_name: Yup.string().required("Name is required"),
+  email: Yup.string().email().required("Email is required"),
+  pan: Yup.string().required("PAN is required"),
+  pin: Yup.string().required("PIN Code is required"),
+  city: Yup.string().required("City is required")
 });
 
-const Personal = ({personalData}) => {
+const Personal = (props) => {
+  const { personalData,userId, }=props
   const {
     data,
     mutateAsync: mutatePin,
     isLoading,
   } = usePostPin();
- const defaultValues={
-  first_name:personalData?.first_name??"",
-  email:personalData?.email??"",
-  pan:personalData?.pan??"",
-  pin:personalData?.pin??"",
-  city:personalData?.city??""
- }
-
+  const {
+    data:PersonalRequestData,
+    mutateAsync: mutatePersonal,
+  } = usePostPersonalDetails();
+  
+  const defaultValues = {
+    first_name: personalData?.first_name ?? "",
+    email: personalData?.email ?? "",
+    pan: personalData?.pan ?? "",
+    pin: personalData?.pin ?? "",
+    city: personalData?.city ?? ""
+  }
   const {
     control,
     reset,
     handleSubmit,
-    formState: {isValid},
+    formState: { isValid },
     setValue,
   } = useForm({
     defaultValues: {
@@ -52,20 +58,36 @@ const Personal = ({personalData}) => {
   useEffect(() => {
     reset(personalData)
   }, [personalData])
-  const onSubmitHandler = () => {};
-const handlePin=async(e)=>{
-  setValue("pin",e.target.value)
-  if(e.target.value.length==6){
+
+  const onSubmitHandler =async (data) => {
+    console.log(data)
     const body={
-pin:e.target.value
+      pin:data?.pin,
+      city:data?.city,
+      pan:data?.pan, 
+      user_id:userId
     }
-    const pinData=await mutatePin(body)
-    console.log(pinData?.data?.response?.PostOffice[0]?.District)
-    setValue("city",pinData?.data?.response?.PostOffice[0]?.District)
+const onPersonal= await mutatePersonal(body)
+console.log(onPersonal?.data,"aokajdaj")
+if(onPersonal?.data?.code==1){
+  console.log("indise")
+  props.onSelectChange(1);
+
+}   };
+  const handlePin = async (e) => {
+    setValue("pin", e.target.value)
+    if (e.target.value.length == 6) {
+      const body = {
+        pin: e.target.value
+      }
+      const pinData = await mutatePin(body)
+      console.log(pinData?.data?.response?.PostOffice[0]?.District)
+      setValue("city", pinData?.data?.response?.PostOffice[0]?.District)
+    }
+
+
   }
 
-  
-}
   return (
     <AccordionItem m={3}>
       <h2>
@@ -78,13 +100,14 @@ pin:e.target.value
       </h2>
       <AccordionPanel pb={4}>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <SimpleGrid columns={{sm: "1", lg: "2"}} spacing={6} mt={4}>
-            <TextInput name="first_name" control={control} type="text" label="Name" />
+          <SimpleGrid columns={{ sm: "1", lg: "2" }} spacing={6} mt={4}>
+            <TextInput name="first_name" control={control} type="text" label="Name" disabled={personalData?.first_name ? true : false} />
             <TextInput
               name="email"
               control={control}
               type="text"
               label="Email"
+              disabled={personalData?.email ? true : false}
             />
             <TextInput name="pan" control={control} type="text" label="PAN" />
             <TextInput
@@ -94,13 +117,13 @@ pin:e.target.value
               label="PIN Code"
               onChange={handlePin}
             />
-            <TextInput name="city" control={control} type="text" label="City" disabled/>
+            <TextInput name="city" control={control} type="text" label="City" disabled />
           </SimpleGrid>
           <Button
             fontSize="sm"
             variant="brand"
             fontWeight="500"
-            w={{sm:"100%", lg:"30%"}}
+            w={{ sm: "100%", lg: "30%" }}
             h="50"
             mt="5px"
             mb="24px"

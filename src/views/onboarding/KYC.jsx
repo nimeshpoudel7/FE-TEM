@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import {
   Accordion,
@@ -33,8 +33,12 @@ const KYC = () => {
   const {data:personalData}=useFetchPersonalDetails(userDetails?.user_id)
   const Bank=useFetchBankDetails(userDetails?.user_id)
   const Document=useFetchDocumentDetails(userDetails?.user_id)
-
+const [stepper, setStepper] = useState([0])
   console.log(personalData)
+  const handleSelectChange=(data)=>{
+    console.log(data,"imee")
+    setStepper(data)
+  }
   return (
    <Box>
       <Header />
@@ -49,8 +53,8 @@ const KYC = () => {
           </Text>
         </Flex>
         <Card>
-          <Accordion allowToggle defaultIndex={[0]} >
-            <Personal personalData={personalData?personalData:""}/>
+          <Accordion allowToggle defaultIndex={stepper} index={stepper} >
+            <Personal personalData={personalData?personalData:""} userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
             <BankDetails />
             <UploadDocuments />
           </Accordion>
