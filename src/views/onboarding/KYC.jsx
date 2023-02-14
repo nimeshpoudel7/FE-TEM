@@ -35,7 +35,6 @@ const KYC = () => {
   const {data:bankData}=useFetchBankDetails(userDetails?.user_id)
   const Document=useFetchDocumentDetails(userDetails?.user_id)
 const [stepper, setStepper] = useState([0])
-  console.log(personalData)
   const handleSelectChange=(data)=>{
     setStepper(data)
   }
@@ -45,7 +44,7 @@ const [stepper, setStepper] = useState([0])
       <Box mx={{sm:"5px",lg:"300px"}}>
         <Flex justify="center" align="center" direction="column">
           <Heading as="h2" size="md">
-            Welcome {userDetails?.first_name}
+            Welcome {personalData?.first_name}
           </Heading>
           <Text size="sm">
             {" "}
@@ -59,7 +58,7 @@ const [stepper, setStepper] = useState([0])
               <CompanyDetails  userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
             }
             <BankDetails bankData={bankData?bankData:""} onSelectChange={handleSelectChange} userId={userDetails?.user_id} />
-            <UploadDocuments UserDetails={personalData?personalData:""} />
+            <UploadDocuments UserDetails={personalData?personalData:""} userId={userDetails?.user_id}/>
           </Accordion>
         </Card>
       </Box>

@@ -46,7 +46,7 @@ export default function DropzoneComponent({
     >
       {({ getRootProps, getInputProps }) => (
         <section>
-          <Box {...getRootProps()} border="2px dashed #D1D5DB" padding={6}>
+          <Box {...getRootProps()} border="2px dashed #D1D5DB" >
             <input {...getInputProps()} />
             <VStack spacing={4}>
               {singleUpload ? (
@@ -60,8 +60,8 @@ export default function DropzoneComponent({
                   />
                   <Image
                     src={preview[0].link}
-                    width="200px"
-                    height="200px"
+                    width="90px"
+                    height="90px"
                     objectFit="cover"
                   />
                   <Text flex={1} noOfLines={[1]}>
@@ -76,6 +76,7 @@ export default function DropzoneComponent({
                     display="flex"
                     justifyContent={"center"}
                     gap={1}
+                    padding={6}
                   >
                     <Text color="#14B8A6" display={"inline-block"}>
                       Upload {multiple ? "files" : "a file"},

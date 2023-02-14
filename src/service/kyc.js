@@ -144,6 +144,36 @@ const postPersonalDetails = (requestData) => {
       },
     });
   };
+  const postDocumentDetails = (requestData,userId) => {
+    console.log(requestData,userId)
+    return MCPHttpClient.post(
+      api.documentDetails,
+      {
+        params: { user_id: "G6OAFK5HV5" },
+      },
+      requestData,
+    );
+  };
+  
+  const usePostDocumentDetails = () => {
+    const queryClient = useQueryClient();
+    return useMutation(postDocumentDetails, {
+      onError: (error) => {
+        toastFail("Something went wrong.Please try again later");
+      },
+      onSuccess: success => {
+        if(success?.data?.code===1){
+          toastSuccess(success?.data?.message);
+          queryClient.invalidateQueries(api.postDocumentDetails);
+          }else{
+            toastFail(success?.data?.message);
+          }
+    
+      },
+    });
+  };
+
+  
 
 
   
@@ -200,7 +230,8 @@ export {
   useFetchDocumentDetails,
   usePostPersonalDetails,
   usePostBankDetails,
-  usePostCompanyDetails
+  usePostCompanyDetails,
+  usePostDocumentDetails
 
 
 };

@@ -69,9 +69,11 @@ const routes = [
   {
     name: "Sign In",
     layout: "/auth",
-    path: "/sign-n",
+    path: "/login",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-    component:LoginCentered ,
+    component: LoginCentered,
+  },
+  {
     name: "Sign Up",
     layout: "/auth",
     path: "/cp-sign-in",
