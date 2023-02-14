@@ -93,6 +93,31 @@ const postPersonalDetails = (requestData) => {
       },
     });
   };
+  
+  const postBankDetails = (requestData) => {
+    return MCPHttpClient.post(
+      api.bankDetails,
+      requestData
+    );
+  };
+  
+  const usePostBankDetails = () => {
+    const queryClient = useQueryClient();
+    return useMutation(postBankDetails, {
+      onError: (error) => {
+        toastFail("Something went wrong.Please try again later");
+      },
+      onSuccess: success => {
+        if(success?.data?.code===1){
+          toastSuccess(success?.data?.message);
+          queryClient.invalidateQueries(api.bankDetails);
+          }else{
+            toastFail(success?.data?.message);
+          }
+    
+      },
+    });
+  };
   // bank
 
   
@@ -144,6 +169,7 @@ export {
   useFetchBankDetails,
   usePostPin,
   useFetchDocumentDetails,
-  usePostPersonalDetails
+  usePostPersonalDetails,
+  usePostBankDetails
 
 };

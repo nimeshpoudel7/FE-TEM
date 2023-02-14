@@ -31,12 +31,11 @@ const KYC = () => {
   // if not redirect to login page
   const {data:userData}=useFetchUserDetails()
   const {data:personalData}=useFetchPersonalDetails(userDetails?.user_id)
-  const Bank=useFetchBankDetails(userDetails?.user_id)
+  const {data:bankData}=useFetchBankDetails(userDetails?.user_id)
   const Document=useFetchDocumentDetails(userDetails?.user_id)
 const [stepper, setStepper] = useState([0])
   console.log(personalData)
   const handleSelectChange=(data)=>{
-    console.log(data,"imee")
     setStepper(data)
   }
   return (
@@ -55,7 +54,7 @@ const [stepper, setStepper] = useState([0])
         <Card>
           <Accordion allowToggle defaultIndex={stepper} index={stepper} >
             <Personal personalData={personalData?personalData:""} userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
-            <BankDetails />
+            <BankDetails bankData={bankData?bankData:""} onSelectChange={handleSelectChange} userId={userDetails?.user_id} />
             <UploadDocuments />
           </Accordion>
         </Card>
