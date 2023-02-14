@@ -18,6 +18,8 @@ import RTL from "views/admin/rtl";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
+import LandingPage from "views/landingpage";
+import KYC from "views/onboarding/KYC";
 
 const routes = [
   {
@@ -62,6 +64,20 @@ const routes = [
     path: "/sign-in",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: SignInCentered,
+  },
+  {
+    name: "Sign Up",
+    layout: "/auth",
+    path: "/cp-sign-in",
+    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    component: LandingPage,
+  },
+  {
+    name: "KYC",
+    layout: "/auth",
+    path: "/kycdetails",
+    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    component: KYC,
   },
   {
     name: "RTL Admin",
