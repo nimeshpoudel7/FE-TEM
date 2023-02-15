@@ -54,11 +54,11 @@ const [stepper, setStepper] = useState([0])
         <Card>
           <Accordion allowToggle defaultIndex={stepper}  >
             <Personal personalData={personalData?personalData:""} userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
-            {personalData?.user_type=="HUF"&&
+            {personalData?.user_type==="HUF"&&
               <CompanyDetails  userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
             }
             <BankDetails bankData={bankData?bankData:""} onSelectChange={handleSelectChange} userId={userDetails?.user_id} />
-            <UploadDocuments UserDetails={personalData?personalData:""} userId={userDetails?.user_id}/>
+            <UploadDocuments UserDetails={personalData?personalData:""} userId={userDetails?.user_id} onSelectChange={handleSelectChange} stepper={stepper}/>
           </Accordion>
         </Card>
       </Box>

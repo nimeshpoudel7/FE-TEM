@@ -4,6 +4,7 @@ import { api } from "./service-api";
 import { MCPHttpClient } from "./service-axios";
 import { toastFail } from "components/toast";
 import { toastSuccess } from "components/toast";
+import { toFormData } from "./form-data";
 
 const fetchUserDetails = () => () => {
   return MCPHttpClient.get(
@@ -148,10 +149,11 @@ const postPersonalDetails = (requestData) => {
     console.log(requestData,userId)
     return MCPHttpClient.post(
       api.documentDetails,
+      toFormData(requestData),
       {
         params: { user_id: "G6OAFK5HV5" },
       },
-      requestData,
+     
     );
   };
   
@@ -164,7 +166,7 @@ const postPersonalDetails = (requestData) => {
       onSuccess: success => {
         if(success?.data?.code===1){
           toastSuccess(success?.data?.message);
-          queryClient.invalidateQueries(api.postDocumentDetails);
+          queryClient.invalidateQueries(api.documentDetails);
           }else{
             toastFail(success?.data?.message);
           }
