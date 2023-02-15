@@ -60,14 +60,14 @@ export default function UserReports() {
     columns={{ base: 1, md: 1, lg: 1, "2xl": 1}}
     gap='20px'
     mb='20px'>
-    <Flex minWidth='max-content' alignItems='center' gap='2' backgroundClip="border-box" bg="#ffffff" borderRadius ="20px"  minWidth ="0px" p ="20px" position ="relative" width="100%"wordWrap= "break-word">
+  {/*  <Flex minWidth='max-content' alignItems='center' gap='2' backgroundClip="border-box" bg="#ffffff" borderRadius ="20px"  minWidth ="0px" p ="20px" position ="relative" width="100%"wordWrap= "break-word">
   <Box p='2'>
     <Heading size='sm'>Date Range</Heading>
   </Box>
   <Spacer />
 
 <SelectComponent variants={"filled"} boxBg={boxBg} options={UserOption} onSelectChange={handleSelectChange}/>
-</Flex>
+  </Flex> */}
   </SimpleGrid>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
