@@ -98,7 +98,7 @@ export default function UserReports() {
           name='Total Investment'
           value={`₹ ${data?.total_investment_amount ?? 0}`}
         />
-        <MiniStatistics growth='+23%' name='Commission' value='$574.34' />
+        <MiniStatistics growth='+23%' name='Commission' value={`₹ ${data?.commission_earned??0}`} />
         <MiniStatistics
         startContent={
           <IconBox
