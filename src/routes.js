@@ -28,14 +28,14 @@ const routes = [
     name: "Dashboard",
     layout: "/admin",
     path: "/default",
-    role:"MS",
+    role:["LENDER CHANNEL PARTNER","MASTER CHANNEL PARTNER"],
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
   },
   {
     name: "NFT Marketplace",
     layout: "/admin",
-    // role:"MS",
+    role:[],
     path: "/nft-marketplace",
     icon: (
       <Icon
@@ -53,7 +53,7 @@ const routes = [
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     path: "/investor-list",
-    role:"MS",
+    role:["LENDER CHANNEL PARTNER","MASTER CHANNEL PARTNER"],
     component: DataTables,
   },
   {
@@ -61,14 +61,14 @@ const routes = [
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     path: "/cp-list",
-    role:"MS",
+    role:["MASTER CHANNEL PARTNER"],
     component: CPList,
   },
   {
     name: "Profile",
     layout: "/admin",
     path: "/profile",
-    // role:"MS",
+    role:[],
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
   },

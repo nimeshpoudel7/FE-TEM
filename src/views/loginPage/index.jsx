@@ -35,7 +35,8 @@ import EmailLogin from "./EmailLogin";
 import OtpLogin from "./OtpLogin";
 import { useLoggedInUserOTP } from "service/login";
 import { usePasswordLogin } from "service/login";
-import { useFetchUserDetails } from "service/login";
+import { useFetchChecklistDetails } from "service/kyc";
+import { useFetchUserChecklistDetails } from "service/login";
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -62,10 +63,11 @@ const verifySchema=Yup.object().shape({
 })
 function LogIn() {
   const navigate=useHistory()
-  const {mutateAsync:mutateLogin,isLoading}=usePasswordLogin()
-  const {mutateAsync:mutateSendOTP}=useLoggedInUserOTP();
-  const {mutateAsync:userRole}=useFetchUserDetails();
+  const {mutateAsync:mutateLogin,isLoading,isSuccess}=usePasswordLogin()
+  const {mutateAsync:mutateSendOTP,isSuccess:isSuccessOTP}=useLoggedInUserOTP();
+  const {data:userData}=useFetchUserChecklistDetails(isSuccess||isSuccessOTP);
 
+  console.log(isSuccess)
   const [OTP, setOTP] = React.useState(false);
     const defaultValues = {
     email: "",
@@ -92,7 +94,7 @@ function LogIn() {
     const response= await mutateLogin(data)
     if(response?.data?.code===1){
       userRoleHandler()
-      navigate.push("/admin")
+      // navigate.push("/admin")
       console.log("respo",response)
       ///call checklist
     }else{
@@ -101,7 +103,17 @@ function LogIn() {
   };
 
 const userRoleHandler = async() => {
-  // const response= await userRole()
+  const response= userData
+  console.log("resonse",response)
+  if(response?.code===1){
+  if(response?.check_list?.status=="COMPLETED"){
+      navigate.push("/admin")
+  }else{
+    navigate.push("/auth/kycdetails")
+  }
+}else{
+  //toast
+}
 }
 
   const verifyOnSubmitHandler=async(data)=>{
@@ -110,7 +122,7 @@ const userRoleHandler = async() => {
     if(response?.data?.code===1){
       console.log("respo",response)
       ///call checklist
-      navigate.push("/admin")
+      // navigate.push("/admin")
 
       userRoleHandler()
     }else{

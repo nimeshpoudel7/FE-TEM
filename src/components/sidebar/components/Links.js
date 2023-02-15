@@ -3,6 +3,7 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import { useFetchAuthUserDetails } from "service/login";
 
 export function SidebarLinks(props) {
   //   Chakra color mode
@@ -15,7 +16,8 @@ export function SidebarLinks(props) {
   let activeIcon = useColorModeValue("brand.500", "white");
   let textColor = useColorModeValue("secondaryGray.500", "white");
   let brandColor = useColorModeValue("brand.500", "brand.400");
-
+  const {data:userData}=useFetchAuthUserDetails()
+  console.log(userData?.user?.groups,"nav")
   const { routes } = props;
 const userRole="MS"
   // verifies if routeName is the one active (in browser input)
@@ -50,11 +52,8 @@ const userRole="MS"
           </>
         );
       } else if (
-        route.layout === "/admin" ||
-        route.layout === "/auth" ||   
-        route.layout === "/rtl"
-      ) {
-        if(route.role==userRole){
+        route.layout === "/admin") {
+        if(route.role.includes(userData?.user?.groups)){
           return (
             <NavLink key={index} to={route.layout + route.path}>
               {route.icon ? (

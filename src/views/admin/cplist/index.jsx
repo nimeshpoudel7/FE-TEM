@@ -15,7 +15,7 @@ import { useFetchCPList } from "service/partner/cp-service";
 export default function CPList() {
   const{data}=useFetchCPList()
   console.log("aaaaa",data)
-  let title="Master Channel Patner"
+  let title="Patner"
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid

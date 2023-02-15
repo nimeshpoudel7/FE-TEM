@@ -87,7 +87,7 @@ export default function DataTables(props) {
   console.log(width,theme.breakpoints.md)
    if(width<parseFloat(theme.breakpoints.md)){
     console.log("heyyy")
-    initialState.hiddenColumns= "email" 
+    initialState.hiddenColumns= "email,mobile_number,created_date,money_added,type,id,type,balance" 
    }
   
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -105,12 +105,13 @@ export default function DataTables(props) {
     const { value } = e.currentTarget;
     setGlobalFilter(value);
   };
+  console.log(data,"datadata")
   return (
     <Card
       direction="column"
       w="100%"
       px="0px"
-      overflowX={{ sm: "scroll", lg: "hidden" }}
+      overflowX={{ sm: "hidden", lg: "hidden" }}
     >
       <Flex px="25px" justify="space-between" align="center">
         <Text
@@ -163,7 +164,7 @@ export default function DataTables(props) {
               {headerGroup.headers?.map((column, index) => (
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe="10px"
+                  // pe="10px"
                   key={index}
                   borderColor={borderColor}
                 >
@@ -258,7 +259,7 @@ export default function DataTables(props) {
                     );
                   }else if (cell.column.Header === "Action") {
                     data = (
-                      <Flex align="center">
+                      <Flex align="center" onClick={(row)=>{props?.OnRedirect(cell?.row?.original)}}   _hover={{ cursor: "pointer" }}>
                       <Badge ml="1" fontSize="0.8em" colorScheme="green">
                       More
                     </Badge>
@@ -270,7 +271,6 @@ export default function DataTables(props) {
                     data = (
                       <Flex align="center">
                         <Text
-                          me="10px"
                           color={textColor}
                           fontSize="sm"
                           fontWeight="700"

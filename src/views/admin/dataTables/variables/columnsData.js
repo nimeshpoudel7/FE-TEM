@@ -1,9 +1,5 @@
 export const columnsDataDevelopment = [
   {
-    Header: "Id",
-    accessor: "id",
-  },
-  {
     Header: "User Id",
     accessor: "user_id",
   },
@@ -46,10 +42,6 @@ export const columnsDataDevelopment = [
 
 export const CPColumns=[
   {
-    Header: "Id",
-    accessor: "id",
-  },
-  {
     Header: "User Id",
     accessor: "user_id",
   },
@@ -72,11 +64,6 @@ export const CPColumns=[
   {
     Header: "Type",
     accessor: "type",
-  },
-  {
-    Header: "Action",
-    accessor: "action",
-    show: true,
   },
 ]
 

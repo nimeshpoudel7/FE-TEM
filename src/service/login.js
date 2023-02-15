@@ -55,7 +55,7 @@ const useLoggedInUserOTP = () => {
         if(success?.data?.response?.token){
           TokenService.setAuthToken(success?.data?.response?.token)
           TokenService.setAutUserDetails(success?.data?.response)
-          queryClient.invalidateQueries(api.user);
+          queryClient.invalidateQueries(api.checklist);
 
         }
 
@@ -91,7 +91,7 @@ const usePasswordLogin = () => {
         }
 
       toastSuccess(success?.data?.message);
-      queryClient.invalidateQueries(api.user);
+      queryClient.invalidateQueries(api.checklist);
       }else{
         toastFail(success?.data?.message);
       }
@@ -100,25 +100,41 @@ const usePasswordLogin = () => {
   });
 };
 
-const fetchUserDetails = () => () => {
+const fetchAuthUserDetails = () => () => {
   return UserHttpClient.get(
     api.user,
   );
 };
 
-const useFetchUserDetails = (userId) => {
+const useFetchAuthUserDetails = (userId) => {
   return useQuery(
     [api.user],
-    fetchUserDetails(userId),
+    fetchAuthUserDetails(userId),
     {
       select: data => data?.data?.response,
     }
   );
 };
 
+const fetchUserChecklist = () => () => {
+  return UserHttpClient.get(
+    api.checklist)
+};
+
+const useFetchUserChecklistDetails = (flag) => {
+  return useQuery(
+    [api.checklist],
+    fetchUserChecklist(),
+    {
+      enabled:flag,
+      select: data => data,
+    }
+  );
+};
 
 export {
+  useFetchUserChecklistDetails,
   usePasswordLogin,
   useLoggedInUserOTP,
-  useFetchUserDetails
+  useFetchAuthUserDetails
 };

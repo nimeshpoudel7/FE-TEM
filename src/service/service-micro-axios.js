@@ -18,8 +18,8 @@ const MicroMCPHttpClient = axios.create({
  */
 MicroMCPHttpClient.interceptors.request.use(async config => {
   // const token = TokenServiceUser.getAuthToken();
-  // const token="f61de86cce0c6342618956512b99b0756b85bb23"
-  const token ="37e7f889637d26dcbf16f13e131bedb77e9be1b8"
+  const token="f61de86cce0c6342618956512b99b0756b85bb23"
+  // const token ="37e7f889637d26dcbf16f13e131bedb77e9be1b8"
 
   if (config && config.headers) {
     if (token) {
