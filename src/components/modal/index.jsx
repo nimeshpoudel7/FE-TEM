@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function ModalComponent({onClose, modalOpen,onAction,modalTitle,children}) {
+  console.log("sss",modalOpen)
   return (
     <Modal isOpen={modalOpen} onClose={onClose} >
       <ModalOverlay />

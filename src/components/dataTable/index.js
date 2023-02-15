@@ -87,7 +87,7 @@ export default function DataTables(props) {
   console.log(width,theme.breakpoints.md)
    if(width<parseFloat(theme.breakpoints.md)){
     console.log("heyyy")
-    initialState.hiddenColumns= "email,mobile_number,created_date,money_added,type,id,type,balance" 
+    initialState.hiddenColumns= "email,mobile_number,created_date,money_added,type,id,type,balance,add_funds,fmpps" 
    }
   
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -269,6 +269,15 @@ export default function DataTables(props) {
                       <Flex align="center" onClick={(row)=>{props?.OnRedirect(cell?.row?.original)}}   _hover={{ cursor: "pointer" }}>
                       <Badge ml="1" fontSize="0.8em" colorScheme="green">
                       More
+                    </Badge>
+                      </Flex>
+                    );
+                  }
+                  else if (cell.column.Header === "Add Fund") {
+                    data = (
+                      <Flex align="center" onClick={(row)=>{props?.addFund(cell?.row?.original)}}   _hover={{ cursor: "pointer" }}>
+                      <Badge ml="1" fontSize="0.8em" colorScheme="green">
+                      Add Fund
                     </Badge>
                       </Flex>
                     );

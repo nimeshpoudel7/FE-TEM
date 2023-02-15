@@ -13,7 +13,8 @@ export const api = {
   checklist:"wealth-manager/checklist",
   allInvestorList:"v1/investor/",
   allCP:"v1/cp/",
-  cpDashboardData:"v1/cp/dashboard"
+  cpDashboardData:"v1/cp/dashboard",
+  sendPaymentLink:"lender-cp/pmi-payment-link"
 };
 
 

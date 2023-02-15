@@ -15,6 +15,7 @@ export default function SidebarDocs() {
   const navigate=useHistory()
   const bgColor = "linear-gradient(135deg, #868CFF 0%, #4318FF 100%)";
   const borderColor = useColorModeValue("white", "navy.800");
+  const inputBg = useColorModeValue("secondaryGray.300", "navy.900");
 const logout=()=>{
   console.log("hey")
   TokenService.clearAuthToken()
@@ -25,17 +26,18 @@ const logout=()=>{
       justify='center'
       direction='column'
       align='center'
-      bg={bgColor}
+      // bg={bgColor}
       borderRadius='30px'
       me='20px'
-      display={{sm:"none"}}
+      display={{sm:"none",lg:"flex"}}
       position='relative'>
+      
         <Button
-          bg={bgColor}
+        background={inputBg}
           _hover={{ bg: "whiteAlpha.200" }}
           _active={{ bg: "whiteAlpha.100" }}
           // mb={{ sm: "16px", xl: "24px" }}
-          color={"white"}
+          // color={"white"}
           fontWeight='regular'
           fontSize='sm'
           minW='185px'

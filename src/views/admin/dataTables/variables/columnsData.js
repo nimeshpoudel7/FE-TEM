@@ -16,8 +16,8 @@ export const columnsDataDevelopment = [
     accessor: "mobile_number",
   },
   {
-    Header: "Created Date",
-    accessor: "created_date",
+    Header: "Add Fund",
+    accessor: "add_funds",
   },
   {
     Header: "Balance",
