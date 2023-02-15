@@ -55,6 +55,7 @@ export default function DropzoneComponent({
                     onClick={e => {
                       e.stopPropagation();
                       setPreview([]);
+                      setAcceptedFiles([])
                     }}
                     alignSelf="flex-end"
                   />
