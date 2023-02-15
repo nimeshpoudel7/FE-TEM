@@ -57,17 +57,9 @@ export default function UserReports() {
     columns={{ base: 1, md: 1, lg: 1, "2xl": 1}}
     gap='20px'
     mb='20px'>
-    {/*<Flex minWidth='max-content' alignItems='center' gap='2' backgroundClip="border-box" bg="#ffffff" borderRadius ="20px"   p ="20px" position ="relative" width="100%"wordWrap= "break-word">
-  <Box p='2'>
-    <Heading size='sm'>Date Range</Heading>
-  </Box>
-  <Spacer />
-
-<SelectComponent variants={"filled"} boxBg={boxBg} options={UserOption} onSelectChange={handleSelectChange}/>
-  </Flex>*/}
   </SimpleGrid>
       <SimpleGrid
-        columns={{ base: 1, md: 2, lg: 3, "2xl": 4 }}
+        columns={{ base: 1, md: 2, lg: 3, "2xl": 3 }}
         gap='20px'
         mb='20px'>
         <MiniStatistics
@@ -98,7 +90,6 @@ export default function UserReports() {
           name='Total Investment'
           value={`₹ ${data?.total_investment_amount ?? 0}`}
         />
-        <MiniStatistics growth='+23%' name='Commission' value={`₹ ${data?.commission_earned??0}`} />
         <MiniStatistics
         startContent={
           <IconBox
@@ -137,22 +128,9 @@ export default function UserReports() {
             />
           }
           name='Amount Witdrawn'
-          value={`₹ ${data?.total_withdraw_amount}`}
+          value={`₹ ${data?.total_withdraw_amount??0}`}
         />
-         <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
-              }
-            />
-          }
-          name='Commission Earned'
-          value={`₹ ${data?.commission_earned}`}
-        />
+        
          <MiniStatistics
           startContent={
             <IconBox
@@ -165,7 +143,7 @@ export default function UserReports() {
             />
           }
           name='FMPP Maturities'
-          value={data?.fmpp_maturities}
+          value={data?.fmpp_maturities??0}
         />
       </SimpleGrid>
 
