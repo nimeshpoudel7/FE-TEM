@@ -120,7 +120,6 @@ export default function DataTables(props) {
           fontWeight="700"
           lineHeight="100%"
         >
-          {title}
         </Text>
         <Menus />
         <InputComponent
