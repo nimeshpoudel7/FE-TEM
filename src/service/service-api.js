@@ -1,6 +1,7 @@
 export const api = {
   login: "login",
   user:"user",
+  managerLogin:"wealth-manager/login",
   pinCode:"third-party/pin-code",
   personalDetails:"lender_cp/personal_details",
   bankDetails:"lender_cp/bank_details",

@@ -33,7 +33,9 @@ import * as Yup from "yup";
 import TextInput from "components/forms/TextInput";
 import EmailLogin from "./EmailLogin";
 import OtpLogin from "./OtpLogin";
-import { useSendOTP } from "service/signup";
+import { useLoggedInUserOTP } from "service/login";
+import { usePasswordLogin } from "service/login";
+import { useFetchUserDetails } from "service/login";
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -59,9 +61,11 @@ const verifySchema=Yup.object().shape({
   .matches(/^\d{6}$/, "Enter a 6 digit valid OTP"),
 })
 function LogIn() {
-  const {mutateAsync:mutateSendOTP}=useSendOTP();
+  const {mutateAsync:mutateLogin,isLoading}=usePasswordLogin()
+  const {mutateAsync:mutateSendOTP}=useLoggedInUserOTP();
+  const {mutateAsync:userRole}=useFetchUserDetails();
 
-  const [OTP, setOTP] = React.useState(true);
+  const [OTP, setOTP] = React.useState(false);
     const defaultValues = {
     email: "",
     password: "",
@@ -83,14 +87,28 @@ function LogIn() {
     resolver: yupResolver(verifySchema),
   });
   const onSubmitHandler = async(data) => {
-    console.log(data,"submit")
+    console.log(data)
+    const response= await mutateLogin(data)
+    if(response?.data?.code===1){
+      userRoleHandler()
+      console.log("respo",response)
+      ///call checklist
+    }else{
+      
+    }
   };
+
+const userRoleHandler = async() => {
+  // const response= await userRole()
+}
+
   const verifyOnSubmitHandler=async(data)=>{
     
     const response= await mutateSendOTP({action:"verify_otp",mobile_number:data?.mobile_number,purpose:"login",key:data?.otp})
     if(response?.data?.code===1){
       console.log("respo",response)
       ///call checklist
+      userRoleHandler()
     }else{
       
     }
