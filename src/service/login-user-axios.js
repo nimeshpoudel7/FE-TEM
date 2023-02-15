@@ -1,14 +1,15 @@
 import axios from "axios";
 
-import TokenServiceUser from "./user-service";
+import TokenService from "./user-service";
 
 const THREE_MINUTES = 3 * 60 * 1000;
-export const baseURL = "http://3.111.143.185:5300/api/"
+export const baseURL = "https://qa.lendenclub.com/api/"
+
 /**
  * Axios HTTP Client
  * {@link https://github.com/axios/axios#request-config Axios Request Config}
  */
-const MicroMCPHttpClient = axios.create({
+const UserHttpClient = axios.create({
   baseURL,
   timeout: THREE_MINUTES,
 });
@@ -16,8 +17,9 @@ const MicroMCPHttpClient = axios.create({
 /**
  * Pass Integito API Key in Header
  */
-MicroMCPHttpClient.interceptors.request.use(async config => {
-  const token = TokenServiceUser.getAuthToken();
+UserHttpClient.interceptors.request.use(async config => {
+  const token = TokenService.getAuthToken();
+  // const token="cf74411241b1074f71930abe3a116a4c572e54e0"
 
   if (config && config.headers) {
     if (token) {
@@ -27,5 +29,7 @@ MicroMCPHttpClient.interceptors.request.use(async config => {
   return config;
 });
 
-export { MicroMCPHttpClient };
+export { UserHttpClient };
+
+
 

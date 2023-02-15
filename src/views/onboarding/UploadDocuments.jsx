@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   AccordionButton,
   AccordionIcon,
@@ -6,8 +6,6 @@ import {
   AccordionPanel,
   Box,
   Button,
-  Flex,
-  Icon,
   SimpleGrid,
   Text,
   useColorModeValue,
@@ -15,9 +13,9 @@ import {
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import {useForm} from "react-hook-form";
-import { MdUpload } from "react-icons/md";
-import Dropzone from "views/admin/profile/components/Dropzone";
-import Card from "components/card/Card";
+import DropzoneComponent from "components/Dropzone";
+import {usePostDocumentDetails} from "service/kyc";
+import { toastFail } from "components/toast";
 
 const verifySchema = Yup.object().shape({
   mobile_number: Yup.string()
@@ -36,27 +34,72 @@ const verifySchema = Yup.object().shape({
     .matches(/^\d{6}$/, "Enter a 6 digit valid OTP"),
 });
 
-const UploadDocument = () => {
+const UploadDocument = ({UserDetails, userId,onSelectChange,stepper}) => {
+  console.log(UserDetails);
+  const [panAcceptedFiles, setPanAcceptedFiles] = useState([]);
+  const [addressacceptedFiles, setAddressAcceptedFiles] = useState([]);
+  const [companyPanacceptedFiles, setCompanyPanAcceptedFiles] = useState([]);
+  const [companyAddressacceptedFiles, setCompanyAddressAcceptedFiles] =
+    useState([]);
+  const [chequeacceptedFiles, setChequeAcceptedFiles] = useState([]);
   const brandColor = useColorModeValue("brand.500", "white");
   const verifyDefaultValues = {
-    mobile_number: "",
+    account_number: "",
     otp: "",
   };
-  const {
-    control,
-    handleSubmit,
-    formState: {isValid},
-  } = useForm({
+  const {data: PersonalRequestData, mutateAsync: mutateDocument} =
+    usePostDocumentDetails();
+  const {control, handleSubmit, register, formState} = useForm({
     defaultValues: {
       ...verifyDefaultValues,
     },
     resolver: yupResolver(verifySchema),
   });
 
-  const onSubmitHandler = () => {};
-
+  const onSubmitHandler = (values) => {
+    console.log(values, "aaaa");
+  };
+  
+  console.log("ass",stepper)
+  const onSubmitHandlerImage = async (values) => {
+    //need validation
+  //   console.log("aaaaaaaaaaa",typeof panAcceptedFiles[0] !=="object" , typeof chequeacceptedFiles[0]!=="object" , addressacceptedFiles[0] !=="object")
+  //  console.log("aaaaaaa",UserDetails?.user_type,panAcceptedFiles[0],chequeacceptedFiles[0],addressacceptedFiles[0],companyPanacceptedFiles[0],companyAddressacceptedFiles[0])
+  //   if(UserDetails?.user_type === "HUF"){
+  //     if(typeof panAcceptedFiles[0] !=="object" || typeof chequeacceptedFiles[0]!=="object" || addressacceptedFiles[0]!=="object"| typeof companyPanacceptedFiles[0]!=="object" ||typeof companyAddressacceptedFiles[0]!=="object") {
+  //       toastFail("above")
+  //       toastFail("Please upload all the documents")
+  //       return;
+  //     } 
+  //   }else{
+  //     if(typeof panAcceptedFiles[0] !=="object" || typeof chequeacceptedFiles[0]!=="object" || addressacceptedFiles[0] !=="object" ) {
+  //       toastFail("below")
+  //       toastFail("Please upload all the documents")
+  //       return;
+  //     }
+  //   }
+    let body = {
+      cancel_cheque: chequeacceptedFiles[0],
+      pan_card:panAcceptedFiles[0],
+      aadhar_card:addressacceptedFiles[0],
+      user_id:userId,
+      field_names:["pan_card","aadhar_card","cancel_cheque"]
+    };
+    if(UserDetails?.user_type === "HUF"){
+      body={...body,
+        organization_pan:companyPanacceptedFiles[0],
+        address_proof:companyAddressacceptedFiles[0],
+        field_names:["pan_card","aadhar_card","cancel_cheque","address_proof","organization_pan"]
+      }
+      
+    }
+    const uploadResponse = await mutateDocument(body, userId);
+    if(uploadResponse?.data?.code===1){
+      onSelectChange(4);
+    }
+    // console.log(onBankPage);
+  };
   return (
-    
     <AccordionItem m={3}>
       <h2>
         <AccordionButton>
@@ -68,42 +111,59 @@ const UploadDocument = () => {
       </h2>
       <AccordionPanel pb={4}>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <Card mb='20px' align='center' p='20px'>
-          <Dropzone
-          w={{ base: "100%", "2xl": "268px" }}
-          me='36px'
-          maxH={{ base: "60%", lg: "50%", "2xl": "100%" }}
-          minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
-          content={
-            <Box>
-              <Icon as={MdUpload} w='80px' h='80px' color={brandColor} />
-              <Flex justify='center' mx='auto' mb='12px'>
-                <Text fontSize='xl' fontWeight='700' color={brandColor}>
-                  Upload Files
-                </Text>
-              </Flex>
-              <Text fontSize='sm' fontWeight='500' color='secondaryGray.500'>
-                PNG, JPG and GIF files are allowed
-              </Text>
-            </Box>
-          }
-        />
-        </Card>
-{/*           
+          <Text my={4}>
+            {UserDetails?.user_type === "HUF"
+              ? "Documents of karta"
+              : "Personal documents"}
+          </Text>
+          <SimpleGrid columns={{sm: "1", lg: "2"}} spacing={6} mt={4}>
+            <DropzoneComponent
+              setAcceptedFiles={setPanAcceptedFiles}
+              helperText="Pan Card"
+            />
+            <DropzoneComponent
+              setAcceptedFiles={setAddressAcceptedFiles}
+              helperText="Address proof"
+            />
+          </SimpleGrid>
+          {UserDetails?.user_type === "HUF" && (
+            <>
+              <Text my={4}>Company documents.</Text>
+              <SimpleGrid columns={{sm: "1", lg: "2"}} spacing={6} mt={4}>
+                <DropzoneComponent
+                  setAcceptedFiles={setCompanyPanAcceptedFiles}
+                  helperText="Pan Card"
+                />
+                <DropzoneComponent
+                  setAcceptedFiles={setCompanyAddressAcceptedFiles}
+                  helperText="Address proof"
+                />
+              </SimpleGrid>
+            </>
+          )}
+          <Text my={4}>
+            Bank Proof (Must be of the bank a/c provided earlier)
+          </Text>
+          <SimpleGrid columns={{sm: "1", lg: "2"}} spacing={6} mt={4}>
+            <DropzoneComponent
+              setAcceptedFiles={setChequeAcceptedFiles}
+              helperText="Cancelled cheque"
+            />
+          </SimpleGrid>
           <Button
             fontSize="sm"
             variant="brand"
             fontWeight="500"
-            w={{sm:"100%", lg:"30%"}}
+            w={{sm: "100%", lg: "30%"}}
             h="50"
             mt="5px"
             mb="24px"
             type="submit"
+            onClick={onSubmitHandlerImage}
           >
             Save and Continue
-          </Button> */}
+          </Button>
         </form>
-        
       </AccordionPanel>
     </AccordionItem>
   );

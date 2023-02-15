@@ -62,6 +62,7 @@ function isAuthenticated() {
 
 function clearToken() {
   localStorage.removeItem("token");
+  localStorage.removeItem("user-data");
 }
 
 

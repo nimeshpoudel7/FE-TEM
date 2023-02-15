@@ -14,6 +14,7 @@ import MainDashboard from "views/admin/default";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
+import CPList from "views/admin/cplist";
 import RTL from "views/admin/rtl";
 
 // Auth Imports
@@ -27,12 +28,14 @@ const routes = [
     name: "Dashboard",
     layout: "/admin",
     path: "/default",
+    role:["LENDER CHANNEL PARTNER","MASTER CHANNEL PARTNER"],
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
   },
   {
     name: "NFT Marketplace",
     layout: "/admin",
+    role:[],
     path: "/nft-marketplace",
     icon: (
       <Icon
@@ -46,16 +49,26 @@ const routes = [
     secondary: true,
   },
   {
-    name: "Data Tables",
+    name: "Investor List",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
+    path: "/investor-list",
+    role:["LENDER CHANNEL PARTNER","MASTER CHANNEL PARTNER"],
     component: DataTables,
+  },
+  {
+    name: "Patner List",
+    layout: "/admin",
+    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    path: "/cp-list",
+    role:["MASTER CHANNEL PARTNER"],
+    component: CPList,
   },
   {
     name: "Profile",
     layout: "/admin",
     path: "/profile",
+    role:[],
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
   },
@@ -69,9 +82,11 @@ const routes = [
   {
     name: "Sign In",
     layout: "/auth",
-    path: "/sign-n",
+    path: "/login",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
-    component:LoginCentered ,
+    component: LoginCentered,
+  },
+  {
     name: "Sign Up",
     layout: "/auth",
     path: "/cp-sign-in",

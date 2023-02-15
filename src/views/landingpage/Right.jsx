@@ -6,6 +6,7 @@ import SignUp from "./SignUp";
 import VerifyOtp from "./VerifyOtp";
 import { useSignUpMCP } from "service/signup";
 import { useSendOTP } from "service/signup";
+import { useHistory } from "react-router-dom";
 
 
 const schema = Yup.object().shape({
@@ -44,6 +45,7 @@ function SignIn() {
   mutateAsync: mutateSignUp,
   isLoading,
 } = useSignUpMCP();
+const navigate = useHistory();
 
 const {mutateAsync:mutateSendOTP}=useSendOTP();
  
@@ -88,12 +90,14 @@ const {mutateAsync:mutateSendOTP}=useSendOTP();
     if(response?.data?.code===1){
       console.log("respo",response)
       ///call checklist
+          navigate.push("/auth/kycdetails")
     }else{
-      
     }
   
     //toast
    }
+
+
 
   
   

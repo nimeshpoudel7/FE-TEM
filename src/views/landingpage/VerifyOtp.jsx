@@ -76,10 +76,11 @@ const VerifyOtp = ({handleSubmit,onSubmitHandler,control,setStep,handleOtp}) => 
             
           />
           <TextInput
-            name="otp"
-            control={control}
-            type="number"
-            label="OTP"
+          name="otp"
+          control={control}
+          type="number"
+          label="OTP"
+
           />
           <Button
             fontSize="sm"

@@ -6,46 +6,80 @@ import {
   Button,
   Flex,
   Heading,
-  SimpleGrid,
-  Spacer,
+  Icon,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import Personal from "./Personal";
 import BankDetails from "./BankDetails";
 import UploadDocuments from "./UploadDocuments";
 import Card from "components/card/Card";
-import TableTopCreators from "views/admin/marketplace/components/TableTopCreators";
-import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
-import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
-import { useFetchUserDetails } from "service/kyc";
 import { useFetchPersonalDetails } from "service/kyc";
 import { useFetchBankDetails } from "service/kyc";
 import { useFetchDocumentDetails } from "service/kyc";
 import TokenService from "service/service-token";
+import TokenServiceUser from "service/user-service";
+
+import CompanyDetails from "./CompanyDetails";
+import { useFetchChecklistDetails } from "service/kyc";
+import ModalComponent from "components/modal";
+import { AiFillCheckCircle } from "react-icons/ai";
+import { useHistory } from "react-router-dom";
 const KYC = () => {
-  const textColor = useColorModeValue("navy.700", "white");
-  const textColorSecondary = useColorModeValue("secondaryGray.600", "white");
-  const userDetails=TokenService.getUserDetails()
-  console.log(userDetails)
-  // if not redirect to login page
-  const {data:userData}=useFetchUserDetails()
+  const navigate =useHistory()
+  const[modalOpen,setModalOpen]=useState(false)
+  
+  const userDetails=TokenService.getUserDetails() != null?TokenService.getUserDetails():TokenServiceUser.getAuthUserDetails()
+
+  console.log(userDetails,"getAuthUserDetails")
   const {data:personalData}=useFetchPersonalDetails(userDetails?.user_id)
-  const Bank=useFetchBankDetails(userDetails?.user_id)
+  const {data:bankData}=useFetchBankDetails(userDetails?.user_id)
   const Document=useFetchDocumentDetails(userDetails?.user_id)
+  const {data:checklistData}=useFetchChecklistDetails()
+  
+  console.log("checklist",checklistData?.check_list?.status )
 const [stepper, setStepper] = useState([0])
-  console.log(personalData)
   const handleSelectChange=(data)=>{
-    console.log(data,"imee")
     setStepper(data)
   }
+  const completeOnBoarding=()=>{
+    setModalOpen(!modalOpen)
+  }
+  const logout=()=>{
+    TokenService.clearToken()
+    setModalOpen(!modalOpen)
+    navigate.push("/auth/login")
+  }
+  
   return (
    <Box>
       <Header />
+      <ModalComponent modalOpen={modalOpen} onClose={completeOnBoarding} >
+        <Flex justify="center" align="center" direction="column"gap={5}>
+        <Icon as={AiFillCheckCircle} width='65px' height='65px' color='green' />
+       <Heading as="h3">Profile Completed</Heading>
+          <Text align="center" >
+          Congratulations! . We are glad to have you as a channel partner. Please give us some time to verify your account. You will receive an email once your account has been activated.
+          </Text>
+          <Button
+            fontSize="sm"
+            variant="brand"
+            fontWeight="500"
+            w={{ sm: "100%" }}
+            h="50"
+            mt="5px"
+            mb="24px"
+            type="submit"
+            disabled={checklistData?.check_list?.status==="PENDING"}
+            onClick={logout}
+          >
+            LOGOUT
+          </Button>
+        </Flex>
+      </ModalComponent>
       <Box mx={{sm:"5px",lg:"300px"}}>
         <Flex justify="center" align="center" direction="column">
           <Heading as="h2" size="md">
-            Welcome Mahesh Khatiwada
+            Welcome {personalData?.first_name}
           </Heading>
           <Text size="sm">
             {" "}
@@ -53,11 +87,28 @@ const [stepper, setStepper] = useState([0])
           </Text>
         </Flex>
         <Card>
-          <Accordion allowToggle defaultIndex={stepper} index={stepper} >
+          <Accordion allowToggle defaultIndex={stepper}  index={stepper}>
             <Personal personalData={personalData?personalData:""} userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
-            <BankDetails />
-            <UploadDocuments />
+            {personalData?.user_type==="HUF"&&
+              <CompanyDetails  userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
+            }
+            <BankDetails bankData={bankData?bankData:""} onSelectChange={handleSelectChange} userId={userDetails?.user_id} />
+            <UploadDocuments UserDetails={personalData?personalData:""} userId={userDetails?.user_id} onSelectChange={handleSelectChange} stepper={stepper}/>
           </Accordion>
+          <Button
+            fontSize="sm"
+            variant="brand"
+            fontWeight="500"
+            w={{ sm: "100%", lg: "30%" }}
+            h="50"
+            mt="5px"
+            mb="24px"
+            type="submit"
+            disabled={checklistData?.check_list?.status==="PENDING"}
+            onClick={completeOnBoarding}
+          >
+            Save and Continue
+          </Button>
         </Card>
       </Box>
   </Box>

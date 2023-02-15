@@ -68,9 +68,8 @@ const Personal = (props) => {
       user_id:userId
     }
 const onPersonal= await mutatePersonal(body)
-console.log(onPersonal?.data,"aokajdaj")
 if(onPersonal?.data?.code==1){
-  console.log("indise")
+
   props.onSelectChange(1);
 
 }   };

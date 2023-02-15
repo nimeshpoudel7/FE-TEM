@@ -4,6 +4,7 @@ import { api } from "./service-api";
 import { MCPHttpClient } from "./service-axios";
 import { toastFail } from "components/toast";
 import { toastSuccess } from "components/toast";
+import { toFormData } from "./form-data";
 
 const fetchUserDetails = () => () => {
   return MCPHttpClient.get(
@@ -86,6 +87,7 @@ const postPersonalDetails = (requestData) => {
         if(success?.data?.code===1){
           toastSuccess(success?.data?.message);
           queryClient.invalidateQueries(api.personalDetails);
+          queryClient.invalidateQueries(api.checklist);
           }else{
             toastFail(success?.data?.message);
           }
@@ -93,6 +95,93 @@ const postPersonalDetails = (requestData) => {
       },
     });
   };
+  
+  const postBankDetails = (requestData) => {
+    return MCPHttpClient.post(
+      api.bankDetails,
+      requestData
+    );
+  };
+  
+  const usePostBankDetails = () => {
+    const queryClient = useQueryClient();
+    return useMutation(postBankDetails, {
+      onError: (error) => {
+        toastFail("Something went wrong.Please try again later");
+      },
+      onSuccess: success => {
+        if(success?.data?.code===1){
+          toastSuccess(success?.data?.message);
+          queryClient.invalidateQueries(api.bankDetails);
+          queryClient.invalidateQueries(api.checklist);
+          }else{
+            toastFail(success?.data?.message);
+          }
+    
+      },
+    });
+  };
+
+
+  const postCompanyDetails = (requestData) => {
+    return MCPHttpClient.post(
+      api.comapanyDetails,
+      requestData
+    );
+  };
+  
+  const usePostCompanyDetails = () => {
+    const queryClient = useQueryClient();
+    return useMutation(postCompanyDetails, {
+      onError: (error) => {
+        toastFail("Something went wrong.Please try again later");
+      },
+      onSuccess: success => {
+        if(success?.data?.code===1){
+          toastSuccess(success?.data?.message);
+          queryClient.invalidateQueries(api.comapanyDetails);
+          }else{
+            toastFail(success?.data?.message);
+          }
+    
+      },
+    });
+  };
+  const postDocumentDetails = (requestData,userId) => {
+    return MCPHttpClient.post(
+      api.documentDetails,
+      toFormData(requestData),
+      {
+        params: { user_id: "G6OAFK5HV5" },
+      },
+     
+    );
+  };
+  
+  const usePostDocumentDetails = () => {
+    const queryClient = useQueryClient();
+    return useMutation(postDocumentDetails, {
+      onError: (error) => {
+        toastFail("Something went wrong.Please try again later");
+      },
+      onSuccess: success => {
+        if(success?.data?.code===1){
+          toastSuccess(success?.data?.message);
+          queryClient.invalidateQueries(api.documentDetails);
+          queryClient.invalidateQueries(api.checklist);
+          
+          }else{
+            toastFail(success?.data?.message);
+          }
+    
+      },
+    });
+  };
+
+  
+
+
+  
   // bank
 
   
@@ -134,6 +223,22 @@ const fetchDocumentDetails = (userId) => () => {
       }
     );
   };
+  
+  const fetchChecklist = () => () => {
+    return MCPHttpClient.get(
+      api.checklist)
+  };
+  
+  const useFetchChecklistDetails = () => {
+    return useQuery(
+      [api.checklist],
+      fetchChecklist(),
+      {
+        select: data => data?.data?.response,
+      }
+    );
+  };
+
 
 
 
@@ -144,6 +249,11 @@ export {
   useFetchBankDetails,
   usePostPin,
   useFetchDocumentDetails,
-  usePostPersonalDetails
+  usePostPersonalDetails,
+  usePostBankDetails,
+  usePostCompanyDetails,
+  usePostDocumentDetails,
+  useFetchChecklistDetails
+
 
 };

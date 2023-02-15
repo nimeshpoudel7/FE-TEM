@@ -60,7 +60,7 @@ export default function AuthNavbar(props) {
     let foundRoute = routes.filter(function (route) {
       return route.items && route.name === routeName;
     });
-    console.log(foundRoute);
+    console.log(foundRoute,"foundRoute");
     return foundRoute[0].items;
   }
   function getLinksCollapse(routeName) {
@@ -71,6 +71,7 @@ export default function AuthNavbar(props) {
     let foundLinks = foundRoute[0].items.filter(function (link) {
       return link.collapse === true;
     });
+    console.log(foundLinks,"foundRoute");
 
     return foundLinks;
   }
