@@ -167,6 +167,8 @@ const postPersonalDetails = (requestData) => {
         if(success?.data?.code===1){
           toastSuccess(success?.data?.message);
           queryClient.invalidateQueries(api.documentDetails);
+          queryClient.invalidateQueries(api.checklist);
+          
           }else{
             toastFail(success?.data?.message);
           }
@@ -228,7 +230,7 @@ const fetchDocumentDetails = (userId) => () => {
   
   const useFetchChecklistDetails = () => {
     return useQuery(
-      [api.documentDetails],
+      [api.checklist],
       fetchChecklist(),
       {
         select: data => data?.data?.response,

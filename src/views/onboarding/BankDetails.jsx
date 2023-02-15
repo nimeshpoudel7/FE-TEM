@@ -44,12 +44,7 @@ const account_type = [
 
 const BankDetails = ({bankData,onSelectChange,userId}) => {
   console.log(bankData)
-  const defaultValues = {
-    account_number:bankData?.account_number??"",
-    ifsc_code:bankData?.ifsc_code??"",
-    account_type:bankData?.account_type??null,
-    bank_name :bankData?.bank_name??""
-  };
+  
   const {
     data:PersonalRequestData,
     mutateAsync: mutateBank,
@@ -59,16 +54,21 @@ const BankDetails = ({bankData,onSelectChange,userId}) => {
     handleSubmit,
     reset,
     setValue,
+    getValues
   } = useForm({
-    defaultValues: {
-      ...defaultValues,
-    },
     resolver: yupResolver(schema),
   });
+  
  
   useEffect(() => {
-    reset(bankData)
-  }, [bankData])
+    const defaultValues = {
+      account_number:bankData?.account_number??"",
+      ifsc_code:bankData?.ifsc_code??"",
+      account_type:account_type.find(e=> e.label===bankData?.account_type)??null,
+      bank_name :bankData?.bank_name??""
+    };
+    reset(defaultValues)
+  }, [bankData,reset])
 
   const onSubmitHandler =async (values) => {
   
