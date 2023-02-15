@@ -9,13 +9,20 @@ import {
 
 import React from "react";
 import { useFetchCPList } from "service/partner/cp-service";
+import { useHistory } from "react-router-dom";
 
 
 
 export default function CPList() {
+  const navigate=useHistory()
   const{data}=useFetchCPList()
   console.log("aaaaa",data)
   let title="Patner"
+  
+  const addPartner=()=>{
+    navigate.push("/auth/cp-sign-in")
+  }
+  
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -26,6 +33,9 @@ export default function CPList() {
         columnsData={CPColumns}
         tableData={data?.cp_list||[]}
         title={title}
+        buttonTitle="Add Partner"
+        buttonOnclick={addPartner}
+        
       />
     </SimpleGrid>
     </Box>

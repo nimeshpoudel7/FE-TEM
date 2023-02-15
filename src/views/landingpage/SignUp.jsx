@@ -12,22 +12,23 @@ const businessTypes = [
     value: "INDIVIDUAL",
     label: "INDIVIDUAL",
   },
-  {
-    value: "LIMITED LIABILITY",
-    label: "LIMITED LIABILITY PARTNERSHIP",
-  },
-  {
-    value: "PARTNERSHIP",
-    label: "PARTNERSHIP FIRM",
-  },
-  {
-    value: "PRIVATE LIMITED",
-    label: "PRIVATE LIMITED COMPANY",
-  },
-  {
-    value: "PROPRIETORSHIP",
-    label: "PROPRIETORSHIP FIRM",
-  },
+  //Commented for future use
+  // {
+  //   value: "LIMITED LIABILITY",
+  //   label: "LIMITED LIABILITY PARTNERSHIP",
+  // },
+  // {
+  //   value: "PARTNERSHIP",
+  //   label: "PARTNERSHIP FIRM",
+  // },
+  // {
+  //   value: "PRIVATE LIMITED",
+  //   label: "PRIVATE LIMITED COMPANY",
+  // },
+  // {
+  //   value: "PROPRIETORSHIP",
+  //   label: "PROPRIETORSHIP FIRM",
+  // },
 ];
 
 const SignUp = ({handleSubmit,onSubmitHandler,control}) => {

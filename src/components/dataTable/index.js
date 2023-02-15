@@ -113,14 +113,22 @@ export default function DataTables(props) {
       px="0px"
       overflowX={{ sm: "hidden", lg: "hidden" }}
     >
-      <Flex px="25px" justify="space-between" align="center">
-        <Text
-          color={textColor}
-          fontSize="22px"
-          fontWeight="700"
-          lineHeight="100%"
-        >
-        </Text>
+      <Flex px="25px" justify="space-between" align="center" gap={{sm:"5px"}}>
+        {props.buttonTitle&&
+         <Button
+         fontSize="sm"
+        //  variant="brand"
+        background={inputBg}
+         fontWeight="500"
+         w={{sm:"40%",lg:"20%"}}
+         h="50"
+         mb="24px"
+         type="submit"
+         onClick={props.buttonOnclick}
+       >
+         {props.buttonTitle}
+       </Button>
+}
         <Menus />
         <InputComponent
           id={1}
