@@ -1,7 +1,7 @@
 
 
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -61,6 +61,7 @@ const verifySchema=Yup.object().shape({
   .matches(/^\d{6}$/, "Enter a 6 digit valid OTP"),
 })
 function LogIn() {
+  const navigate=useHistory()
   const {mutateAsync:mutateLogin,isLoading}=usePasswordLogin()
   const {mutateAsync:mutateSendOTP}=useLoggedInUserOTP();
   const {mutateAsync:userRole}=useFetchUserDetails();
@@ -91,6 +92,7 @@ function LogIn() {
     const response= await mutateLogin(data)
     if(response?.data?.code===1){
       userRoleHandler()
+      navigate.push("/admin")
       console.log("respo",response)
       ///call checklist
     }else{
@@ -108,6 +110,8 @@ const userRoleHandler = async() => {
     if(response?.data?.code===1){
       console.log("respo",response)
       ///call checklist
+      navigate.push("/admin")
+
       userRoleHandler()
     }else{
       

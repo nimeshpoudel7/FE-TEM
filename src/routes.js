@@ -27,12 +27,14 @@ const routes = [
     name: "Dashboard",
     layout: "/admin",
     path: "/default",
+    role:"MS",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
   },
   {
     name: "NFT Marketplace",
     layout: "/admin",
+    role:"MS",
     path: "/nft-marketplace",
     icon: (
       <Icon
@@ -50,6 +52,7 @@ const routes = [
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     path: "/data-tables",
+    role:"MS",
     component: DataTables,
   },
   {

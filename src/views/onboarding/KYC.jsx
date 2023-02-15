@@ -17,15 +17,20 @@ import { useFetchPersonalDetails } from "service/kyc";
 import { useFetchBankDetails } from "service/kyc";
 import { useFetchDocumentDetails } from "service/kyc";
 import TokenService from "service/service-token";
+import TokenServiceUser from "service/user-service";
+
 import CompanyDetails from "./CompanyDetails";
 import { useFetchChecklistDetails } from "service/kyc";
 import ModalComponent from "components/modal";
 import { AiFillCheckCircle } from "react-icons/ai";
+import { useHistory } from "react-router-dom";
 const KYC = () => {
+  const navigate =useHistory()
   const[modalOpen,setModalOpen]=useState(false)
   
-  const userDetails=TokenService.getUserDetails()
-  console.log(userDetails)
+  const userDetails=TokenService.getUserDetails() != null?TokenService.getUserDetails():TokenServiceUser.getAuthUserDetails()
+
+  console.log(userDetails,"getAuthUserDetails")
   const {data:personalData}=useFetchPersonalDetails(userDetails?.user_id)
   const {data:bankData}=useFetchBankDetails(userDetails?.user_id)
   const Document=useFetchDocumentDetails(userDetails?.user_id)
@@ -39,6 +44,12 @@ const [stepper, setStepper] = useState([0])
   const completeOnBoarding=()=>{
     setModalOpen(!modalOpen)
   }
+  const logout=()=>{
+    TokenService.clearToken()
+    setModalOpen(!modalOpen)
+    navigate.push("/auth/login")
+  }
+  
   return (
    <Box>
       <Header />
@@ -59,7 +70,7 @@ const [stepper, setStepper] = useState([0])
             mb="24px"
             type="submit"
             disabled={checklistData?.check_list?.status==="PENDING"}
-            onClick={completeOnBoarding}
+            onClick={logout}
           >
             LOGOUT
           </Button>
@@ -76,7 +87,7 @@ const [stepper, setStepper] = useState([0])
           </Text>
         </Flex>
         <Card>
-          <Accordion allowToggle defaultIndex={stepper}  >
+          <Accordion allowToggle defaultIndex={stepper}  index={stepper}>
             <Personal personalData={personalData?personalData:""} userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>
             {personalData?.user_type==="HUF"&&
               <CompanyDetails  userId={userDetails?.user_id}  onSelectChange={handleSelectChange}/>

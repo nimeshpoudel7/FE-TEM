@@ -198,7 +198,7 @@ function SignIn() {
             mt='0px'>
             <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
               Not registered yet?
-              <NavLink to='/auth/sign-up'>
+              <NavLink to='/auth/cp-sign-in'>
                 <Text
                   color={textColorBrand}
                   as='span'
