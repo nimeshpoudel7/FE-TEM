@@ -93,8 +93,8 @@ function LogIn() {
     console.log(data)
     const response= await mutateLogin(data)
     if(response?.data?.code===1){
-      userRoleHandler()
-      // navigate.push("/admin")
+      // userRoleHandler()
+      navigate.push("/admin")
       console.log("respo",response)
       ///call checklist
     }else{
@@ -122,9 +122,9 @@ const userRoleHandler = async() => {
     if(response?.data?.code===1){
       console.log("respo",response)
       ///call checklist
-      // navigate.push("/admin")
+      navigate.push("/admin")
 
-      userRoleHandler()
+      // userRoleHandler()
     }else{
       
     }
