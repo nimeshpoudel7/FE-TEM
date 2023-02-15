@@ -4,17 +4,17 @@ import DevelopmentTable from "components/dataTable/index";
 
 
 import {
-  columnsDataDevelopment,
+  CPColumns,
 } from "views/admin/dataTables/variables/columnsData";
 
 import React from "react";
-import { useFetchInvestorList } from "service/investor/invester-service";
+import { useFetchCPList } from "service/partner/cp-service";
 
 
-export default function Settings() {
-  const{data}=useFetchInvestorList()
-  
-  console.log("data",data)
+
+export default function CPList() {
+  const{data}=useFetchCPList()
+  console.log("aaaaa",data)
   let title="Master Channel Patner"
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -23,8 +23,8 @@ export default function Settings() {
       columns={{ sm: 1, md: 1 }}
       spacing={{ base: "20px", xl: "20px" }}>
       <DevelopmentTable
-        columnsData={columnsDataDevelopment}
-        tableData={data?.investor_list||[]}
+        columnsData={CPColumns}
+        tableData={data?.cp_list||[]}
         title={title}
       />
     </SimpleGrid>

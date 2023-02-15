@@ -14,6 +14,7 @@ import MainDashboard from "views/admin/default";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
+import CPList from "views/admin/cplist";
 import RTL from "views/admin/rtl";
 
 // Auth Imports
@@ -34,7 +35,7 @@ const routes = [
   {
     name: "NFT Marketplace",
     layout: "/admin",
-    role:"MS",
+    // role:"MS",
     path: "/nft-marketplace",
     icon: (
       <Icon
@@ -51,7 +52,7 @@ const routes = [
     name: "Investor List",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
+    path: "/investor-list",
     role:"MS",
     component: DataTables,
   },
@@ -59,15 +60,15 @@ const routes = [
     name: "Patner List",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-listttt",
+    path: "/cp-list",
     role:"MS",
-    component: DataTables,
+    component: CPList,
   },
   {
     name: "Profile",
     layout: "/admin",
     path: "/profile",
-    role:"MS",
+    // role:"MS",
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
   },

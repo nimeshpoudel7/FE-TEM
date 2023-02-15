@@ -87,9 +87,9 @@ export default function DataTables(props) {
   console.log(width,theme.breakpoints.md)
    if(width<parseFloat(theme.breakpoints.md)){
     console.log("heyyy")
-    // initialState.hiddenColumns= "name,tech" 
+    initialState.hiddenColumns= "email" 
    }
-   console.log(tableInstance)
+  
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const iconColor = useColorModeValue("secondaryGray.500", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -275,15 +275,15 @@ export default function DataTables(props) {
                           fontSize="sm"
                           fontWeight="700"
                         >
-                          {cell.value}%
+                          {cell.value}
                         </Text>
-                        <Progress
+                        {/* <Progress
                           variant="table"
                           colorScheme="brandScheme"
                           h="8px"
                           w="63px"
                           value={cell.value}
-                        />
+                        /> */}
                       </Flex>
                     );
                   }
