@@ -220,6 +220,22 @@ const fetchDocumentDetails = (userId) => () => {
       }
     );
   };
+  
+  const fetchChecklist = () => () => {
+    return MCPHttpClient.get(
+      api.checklist)
+  };
+  
+  const useFetchChecklistDetails = () => {
+    return useQuery(
+      [api.documentDetails],
+      fetchChecklist(),
+      {
+        select: data => data?.data?.response,
+      }
+    );
+  };
+
 
 
 
@@ -233,7 +249,8 @@ export {
   usePostPersonalDetails,
   usePostBankDetails,
   usePostCompanyDetails,
-  usePostDocumentDetails
+  usePostDocumentDetails,
+  useFetchChecklistDetails
 
 
 };

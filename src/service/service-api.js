@@ -8,7 +8,8 @@ export const api = {
   comapanyDetails:"lender_cp/company_details",
   signup:"wealth-manager/signup",
   otp:"wealth-manager/otp",
-  investorListing:"investors/investments/v1/channel-partner/investor/details/?limit=100&offset=0&user_id=Z8QAYKO5MR"
+  investorListing:"investors/investments/v1/channel-partner/investor/details/?limit=100&offset=0&user_id=Z8QAYKO5MR",
+  checklist:"wealth-manager/checklist"
 
 };
 
