@@ -84,12 +84,13 @@ export default function DataTables(props) {
     state: { pageIndex, pageSize },
   } = tableInstance;
   initialState.pageSize = 11;
-  console.log(width,theme.breakpoints.md)
-   if(width<parseFloat(theme.breakpoints.md)){
-    console.log("heyyy")
-    initialState.hiddenColumns= "email,mobile_number,created_date,money_added,type,id,type,balance,add_funds,fmpps" 
-   }
-  
+  console.log(width, theme.breakpoints.md);
+  if (width < parseFloat(theme.breakpoints.md)) {
+    console.log("heyyy");
+    initialState.hiddenColumns =
+      "email,mobile_number,created_date,money_added,type,id,type,balance,add_funds,fmpps";
+  }
+
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const iconColor = useColorModeValue("secondaryGray.500", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -105,7 +106,7 @@ export default function DataTables(props) {
     const { value } = e.currentTarget;
     setGlobalFilter(value);
   };
-  console.log(data,"datadata")
+  console.log(data, "datadata");
   return (
     <Card
       direction="column"
@@ -113,22 +114,27 @@ export default function DataTables(props) {
       px="0px"
       overflowX={{ sm: "hidden", lg: "hidden" }}
     >
-      <Flex px="25px" justify="space-between" align="center" gap={{sm:"5px"}}>
-        {props.buttonTitle&&
-         <Button
-         fontSize="sm"
-        //  variant="brand"
-        background={inputBg}
-         fontWeight="500"
-         w={{sm:"40%",lg:"20%"}}
-         h="50"
-         mb="24px"
-         type="submit"
-         onClick={props.buttonOnclick}
-       >
-         {props.buttonTitle}
-       </Button>
-}
+      <Flex
+        px="25px"
+        justify="space-between"
+        align="center"
+        gap={{ sm: "5px" }}
+      >
+        {props.buttonTitle && (
+          <Button
+            fontSize="sm"
+            //  variant="brand"
+            background={inputBg}
+            fontWeight="500"
+            w={{ sm: "40%", lg: "20%" }}
+            h="50"
+            mb="24px"
+            type="submit"
+            onClick={props.buttonOnclick}
+          >
+            {props.buttonTitle}
+          </Button>
+        )}
         <Menus />
         <InputComponent
           id={1}
@@ -147,12 +153,14 @@ export default function DataTables(props) {
             fontSize="sm"
             fontWeight="500"
             color={textColorSecondary}
-            onSelect={(e)=>{console.log(e)}}
+            onSelect={(e) => {
+              console.log(e);
+            }}
             leftIcon={<MdOutlineCalendarToday />}
           >
             This Month
           </MenuButton>
-         {/* <MenuList>
+          {/* <MenuList>
             <MenuItem>Download</MenuItem>
             <MenuItem>Create a Copy</MenuItem>
             <MenuItem>Mark as Draft</MenuItem>
@@ -264,33 +272,38 @@ export default function DataTables(props) {
                         />
                       </Flex>
                     );
-                  }else if (cell.column.Header === "Action") {
+                  } else if (cell.column.Header === "Action") {
                     data = (
-                      <Flex align="center" onClick={(row)=>{props?.OnRedirect(cell?.row?.original)}}   _hover={{ cursor: "pointer" }}>
-                      <Badge ml="1" fontSize="0.8em" colorScheme="green">
-                      More
-                    </Badge>
+                      <Flex
+                        align="center"
+                        onClick={(row) => {
+                          props?.OnRedirect(cell?.row?.original);
+                        }}
+                        _hover={{ cursor: "pointer" }}
+                      >
+                        <Badge ml="1" fontSize="0.8em" colorScheme="green">
+                          More
+                        </Badge>
                       </Flex>
                     );
-                  }
-                  else if (cell.column.Header === "Add Fund") {
+                  } else if (cell.column.Header === "Add Fund") {
                     data = (
-                      <Flex align="center" onClick={(row)=>{props?.addFund(cell?.row?.original)}}   _hover={{ cursor: "pointer" }}>
-                      <Badge ml="1" fontSize="0.8em" colorScheme="green">
-                      Add Fund
-                    </Badge>
+                      <Flex
+                        align="center"
+                        onClick={(row) => {
+                          props?.addFund(cell?.row?.original);
+                        }}
+                        _hover={{ cursor: "pointer" }}
+                      >
+                        <Badge ml="1" fontSize="0.8em" colorScheme="green">
+                          Add Fund
+                        </Badge>
                       </Flex>
                     );
-                  }
-                  
-                  else{
+                  } else {
                     data = (
                       <Flex align="center">
-                        <Text
-                          color={textColor}
-                          fontSize="sm"
-                          fontWeight="700"
-                        >
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                         {/* <Progress
