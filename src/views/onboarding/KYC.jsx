@@ -22,7 +22,7 @@ import { useFetchChecklistDetails } from "service/kyc";
 import ModalComponent from "components/modal";
 import { AiFillCheckCircle } from "react-icons/ai";
 const KYC = () => {
-  const[modalOpen,setModalOpen]=useState(true)
+  const[modalOpen,setModalOpen]=useState(false)
   
   const userDetails=TokenService.getUserDetails()
   console.log(userDetails)
@@ -42,7 +42,7 @@ const [stepper, setStepper] = useState([0])
   return (
    <Box>
       <Header />
-      <ModalComponent modalOpen={modalOpen} onClose={completeOnBoarding}>
+      <ModalComponent modalOpen={modalOpen} onClose={completeOnBoarding} >
         <Flex justify="center" align="center" direction="column"gap={5}>
         <Icon as={AiFillCheckCircle} width='65px' height='65px' color='green' />
        <Heading as="h3">Profile Completed</Heading>

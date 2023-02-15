@@ -87,6 +87,7 @@ const postPersonalDetails = (requestData) => {
         if(success?.data?.code===1){
           toastSuccess(success?.data?.message);
           queryClient.invalidateQueries(api.personalDetails);
+          queryClient.invalidateQueries(api.checklist);
           }else{
             toastFail(success?.data?.message);
           }
@@ -112,6 +113,7 @@ const postPersonalDetails = (requestData) => {
         if(success?.data?.code===1){
           toastSuccess(success?.data?.message);
           queryClient.invalidateQueries(api.bankDetails);
+          queryClient.invalidateQueries(api.checklist);
           }else{
             toastFail(success?.data?.message);
           }
@@ -146,7 +148,6 @@ const postPersonalDetails = (requestData) => {
     });
   };
   const postDocumentDetails = (requestData,userId) => {
-    console.log(requestData,userId)
     return MCPHttpClient.post(
       api.documentDetails,
       toFormData(requestData),

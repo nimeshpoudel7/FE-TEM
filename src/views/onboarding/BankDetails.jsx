@@ -54,7 +54,6 @@ const BankDetails = ({bankData,onSelectChange,userId}) => {
     handleSubmit,
     reset,
     setValue,
-    getValues
   } = useForm({
     resolver: yupResolver(schema),
   });
